@@ -6,44 +6,46 @@
 # John Kerl
 # kerl.john.r@gmail.com
 # 2007-05-31
+#
+# The current directory should be in $PYTHONPATH.
+# Please do "./sack --help" for on-line help.
 # ================================================================
 
+# ================================================================
+# To do:
+# * from_file stuff
+# * sack d center .: give usage
+# * __lt__ et al. everywhere
+# * deepsort method -- into sackset?  use this post-close.
+# * dih 1:0 vs. 1,0 -- fix error handling
+# * pmt sgn method: bubble sort w/ swap count
+
+# Commands to implement:
+# * centralizer
+# * conjbyelt
+# * conj_classes
+# * cosets L/R
+# * internal dp
+# * is_subgroup
+# * normalizer
+# * normal_subgroup
+# * powsgr
+# * torsion
+
+# * ascendant
+# * aut_group
+# * cap
+# * cayley_sn
+# * core
+# * cosets
+# * inn
+
 # ----------------------------------------------------------------
-# from_file stuff!
-# sack d center .: give usage
-# __lt__ et al. everywhere
-# deepsort method -- into sackset?  use this post-close.
-
-# dih 1:0 vs. 1,0 -- fix error handling
-# pmt sgn method: bubble sort w/ swap count
-
-# ----------------------------------------------------------------
-# centralizer
-# conjbyelt
-# conj_classes
-# cosets L/R
-# internal dp
-# is_subgroup
-# normalizer
-# normal_subgroup
-# powsgr
-# torsion
-
-# ascendant
-# aut_group
-# cap
-# cayley_sn
-# core
-# cosets
-# inn
-
-# ----------------------------------------------------------------
-# sn an sni ani
-
-# fpell3 ftell5
-
-# triv testing smodadd smodmul miquatadd miquatmul smiquatadd smiquatmul
-# z2ipolymodadd z2ipolymodmul zppolyadd zppolymul tetra cube icos slgf glgf dgf
+# Groups:
+# * sn an sni ani
+# * fpell3 ftell5
+# * triv testing smodadd smodmul miquatadd miquatmul smiquatadd smiquatmul
+# * z2ipolymodadd z2ipolymodmul zppolyadd zppolymul tetra cube icos slgf glgf dgf
 
 # ----------------------------------------------------------------
 # ring stuff -- ops, at least
@@ -66,6 +68,7 @@
 # * groebner:
 #   - generalized division alg'm
 # * new & improved aut-group computation (need generators)?
+# ================================================================
 
 from __future__ import division # 1/2 = 0.5, not 0.
 import sys
@@ -150,6 +153,68 @@ group_lookup = {
 	"ispec"   : ispec_gm,
 	#"semi"    : semi_gm,
 	}
+
+# ----------------------------------------------------------------
+def main():
+
+	if (len(sys.argv) < 2):
+		short_usage(sys.argv[0])
+
+	if (sys.argv[1]=='help') or (sys.argv[1]=='-h') or (sys.argv[1]=='--help'):
+		long_usage(sys.argv[0])
+
+	# Examples:
+	# * d:4 denotes the dihedral group D4:  dihedral family with parameter 4.
+	# * s:3 denotes S3.
+	# * spec:tbl.txt denotes a user-specified group with cayley table in file
+	#   tbl.txt.
+	# * semi:V4/S3/action.txt denotes the semidirect product of V4 and S3 with
+	#   the action of S3 on V4 in file action.txt.  File format for N semi K:
+	#   the file is a matrix with ith row and jth column being {n_i}^{k_j}.
+
+	type_and_group_params = re.split(':', sys.argv[1], 1);
+	type_name = type_and_group_params[0];
+	if (len(type_and_group_params) == 1) :
+		group_params_string = ""
+	else:
+		group_params_string = type_and_group_params[1]
+
+	if (not type_lookup.has_key(type_name)):
+		print "No such group type: " + type_name
+		sys.exit(1)
+	type_spec = type_lookup[type_name]
+
+	# Hack -- needs documentation
+	if (type_name == "spec" or type_name == "ispec"):
+		group_spec = group_lookup[type_name]
+		not_used = group_spec.get_elements_str(group_params_string)
+
+	# Hack -- needs documentation
+	# * sys.argv[1] is "semi:v4/s:3/action.txt"
+	# * type_name is "semi"
+	# * group_params_string is "v4/s:3/action.txt"
+	# * Split on "/".
+	# * N_name is "v4"
+	# * K_name is "s:3"
+	# * aut_file_name is "action.txt"
+
+	#if (type_name == "semi") :
+		# [N_name, K_name, aut_file_name] = re.split('/', group_params_string, 2);
+		# Fill out N from N_name
+		# Fill out K from K_name
+		# Read in the action.txt matrix with values {n_i}^{k_j}, i.e. elements of
+		#   N.  This means we need to use N's I/O methods.
+
+	cmd_name = sys.argv[2];
+	if (not cmd_lookup.has_key(cmd_name)):
+		print "No such command: " + cmd_name
+		sys.exit(1)
+	handler = cmd_lookup[cmd_name]
+
+	cmd_argv = sys.argv[3:]
+	handler(cmd_name, cmd_argv, group_params_string, type_name, type_spec)
+
+	sys.exit(0)
 
 # ----------------------------------------------------------------
 def check_min_args(cmd_name, cmd_argv, n):
@@ -556,63 +621,5 @@ def long_usage(argv0):
 	sys.exit(1)
 
 # ================================================================
-# Entry point of script.
-
-if (len(sys.argv) < 2):
-	short_usage(sys.argv[0])
-
-if (sys.argv[1]=='help') or (sys.argv[1]=='-h') or (sys.argv[1]=='--help'):
-	long_usage(sys.argv[0])
-
-# Examples:
-# * d:4 denotes the dihedral group D4:  dihedral family with parameter 4.
-# * s:3 denotes S3.
-# * spec:tbl.txt denotes a user-specified group with cayley table in file
-#   tbl.txt.
-# * semi:V4/S3/action.txt denotes the semidirect product of V4 and S3 with
-#   the action of S3 on V4 in file action.txt.  File format for N semi K:
-#   the file is a matrix with ith row and jth column being {n_i}^{k_j}.
-
-type_and_group_params = re.split(':', sys.argv[1], 1);
-type_name = type_and_group_params[0];
-if (len(type_and_group_params) == 1) :
-	group_params_string = ""
-else:
-	group_params_string = type_and_group_params[1]
-
-if (not type_lookup.has_key(type_name)):
-	print "No such group type: " + type_name
-	sys.exit(1)
-type_spec = type_lookup[type_name]
-
-# Hack -- needs documentation
-if (type_name == "spec" or type_name == "ispec"):
-	group_spec = group_lookup[type_name]
-	not_used = group_spec.get_elements_str(group_params_string)
-
-# Hack -- needs documentation
-# * sys.argv[1] is "semi:v4/s:3/action.txt"
-# * type_name is "semi"
-# * group_params_string is "v4/s:3/action.txt"
-# * Split on "/".
-# * N_name is "v4"
-# * K_name is "s:3"
-# * aut_file_name is "action.txt"
-
-#if (type_name == "semi") :
-	# [N_name, K_name, aut_file_name] = re.split('/', group_params_string, 2);
-	# Fill out N from N_name
-	# Fill out K from K_name
-	# Read in the action.txt matrix with values {n_i}^{k_j}, i.e. elements of
-	#   N.  This means we need to use N's I/O methods.
-
-cmd_name = sys.argv[2];
-if (not cmd_lookup.has_key(cmd_name)):
-	print "No such command: " + cmd_name
-	sys.exit(1)
-handler = cmd_lookup[cmd_name]
-
-cmd_argv = sys.argv[3:]
-handler(cmd_name, cmd_argv, group_params_string, type_name, type_spec)
-
-sys.exit(0)
+# Script entry point (top-down programming style, please).
+main()
