@@ -28,11 +28,21 @@ import unittest
 # ================================================================
 class pmtc_t:
 
+	# Doesn't do check_permutation(), for performance.
 	def __init__(self, images, n):
 		if len(images) != n:
-			raise RuntimeError
+			raise RuntimeError("Images length (%d) != n (%d)." % (len(images), n))
+		if n < 1:
+			raise RuntimeError("n must be >= 1; got %d." % n)
 		self.n = n
 		self.zimages = [0] + copy.copy(images)
+
+	def check_permutation(self):
+		test = copy.copy(self.zimages)
+		test.sort()
+		for i in range(1, self.n+1):
+			if (test[i] != i):
+				raise RuntimeError("Not a permutation: %s.  Test: %s." % (str(self.zimages), str(test)))
 
 	def __eq__(a,b):
 		return (a.zimages == b.zimages)
@@ -67,20 +77,11 @@ class pmtc_t:
 
 	def __mul__(a,b):
 		if (a.n != b.n):
-			raise RuntimeError
+			raise RuntimeError("mul() length mismatch: %d != %d" % ((a.n, b.n)))
 		c = pmtc_t(range(1, a.n+1), a.n)
 		for i in range(1, a.n+1):
 			c.zimages[i] = a.zimages[b.zimages[i]]
 		return c
-
-	def check_permutation(self):
-		test = copy.copy(self.zimages)
-		test.sort()
-		for i in range(1, self.n+1):
-			if (test[i] != i):
-				print "Not a permutation:", self.zimages
-				print "Test:", test
-				raise RuntimeError
 
 	def inv(a):
 		c = pmtc_t(range(1, a.n+1), a.n)
@@ -90,8 +91,7 @@ class pmtc_t:
 
 	def __getitem__(self, i):
 		if (i == 0):
-			print "pmtc: zimage[0] is protected."
-			raise RuntimeError
+			raise RuntimeError("pmtc: zimage[0] is protected.")
 		return self.zimages[i]
 
 	# Left group action on a specified set.  The set is indexed zero-up,
@@ -269,7 +269,6 @@ class pmtc_t:
 		images = zimages[1:]
 		self.__init__(images, n)
 		self.check_permutation()
-
 
 	# e.g. [[1,2],[3,4]]
 	# xxx this method also needs some comments. :)
@@ -615,86 +614,180 @@ def sort_pmtcs(list):
 if __name__ == '__main__':
 
 	# ----------------------------------------------------------------
+	# TBI = to be implemented
 	class test_pmtc(unittest.TestCase):
-		def setUp(self):
-			print 'setup'
-		def test_foo(self):
-			print 'testfoo'
+		#def setUp(self):
+		#	print 'setup'
 
-#	def __init__(self, images, n):
-#		if len(images) != n:
-#			raise RuntimeError
-#	def __eq__(a,b):
-#	def __ne__(a,b):
-#	def __cmp__(a,b):
-#	def __mul__(a,b):
-#	def check_permutation(self):
-#	def inv(a):
-#	def __getitem__(self, i):
-#
-#	def of(self, input):
-#	def inv_img(self, dst):
-#	def sgn(self):
-#	def parity(self):
-#	def oldparity(self):
-#	def oldsgn(self):
-#	def cycle_decomposition(self):
-#	def cycle_type(self):
-#	def transposition_decomposition(self):
-#	def scan(self, cycles_string, n):
-#
-#	# e.g. [[1,2],[3,4]]
-#	# xxx this method also needs some comments. :)
-#	def cycle_fill(self, cycles, n):
-#	def __str__(self):
-#	def __repr__(self):
+		def test_ctor(self):
+			with self.assertRaises(RuntimeError):
+				pi = pmtc_t([1,2,3], 4)
+			with self.assertRaises(RuntimeError):
+				pi = pmtc_t([], 0)
+			pi = pmtc_t([1], 1)
+			pi = pmtc_t([1,2], 2)
+			pi = pmtc_t([1,2,3], 3)
 
-	# ----------------------------------------------------------------
-	#def from_cycles(cycles, n):
-	#def from_cycle(cycle, n):
-	# ----------------------------------------------------------------
-	# Example:  [3 2 1] --> ((1 2 3)(4 5)(6))
-	#def from_cycle_type(ct):
-	# ----------------------------------------------------------------
-	#def cycle_type_reps(n):
-	# ----------------------------------------------------------------
-	## Auxiliary function.
-	## Converts a list of sorted numbers into a list of pairs of elements and
-	## repetition counts.  Example( with commas suppressed):
-	## [4 4 4  3 3 3 3 3  2  1 1] -> [[4 3] [3 5] [2 1] [1 2]]
-	#def type_to_counts(ct):
-	# ----------------------------------------------------------------
-	## Counts the number of permutations in Sn which share a given
-	## cycle type.  This is best explained by example.
-	## * Cycle type = [3 2 2]
-	## * I have 7 boxes to fill: [ _ _ _ | _ _ | _ _ ].
-	## * There are 7! = 5040 ways to put the numbers 1-7 in those
-	##   boxes.
-	## * This overcounts.  For example, [1 2 3][4 5][6 7]
-	##   is equivalent to [2 3 1][4 5][6 7] -- these are the same
-	##   permutation.  Likewise [1 2 3][4 5][6 7] is the same
-	##   permutation as [1 2 3][6 7][4 5].
-	## * Divide 5040 by 3*2*2, to count cyclic shifts within a cycle.
-	## * Divide by 2!, since adjacent two-cycles can be transposed.
-	##   E.g. (1 2 3)(4 5)(6 7) is equivalent to (1 2 3)(6 7)(4 5).
-	#def num_ct_reps(ct):
-	## ----------------------------------------------------------------
-	#def params_from_string(params_string):
-	#def from_string(value_string, params_string):
-	#def kth_pmtc(k, n, nfact):
-	#def identity_pmtc(n):
-	## ================================================================
-	#def rand_pmtc(N):
-	## ----------------------------------------------------------------
-	# Auxiliary routine for sort_pmtcs() below.
-	# Return -1 if a <  b;
-	# return  0 if a == b;
-	# return +1 if a >  b.
-	# Compare lexically on cycle types.
-	# Break ties within cycle type by lexical compare on image maps.
-	#def pmtc_cmp(ta, tb):
-	# ----------------------------------------------------------------
-	#def sort_pmtcs(list):
+		def test_check_permutation(self):
+			pass # TBI
+	#	def check_permutation(self):
+
+		def test_eq(self):
+			self.assertEqual(pmtc_t([1,2,3], 3), pmtc_t([1,2,3], 3))
+			self.assertNotEqual(pmtc_t([1,2,3], 3), pmtc_t([1,3,2], 3))
+
+		def test_ne(self):
+			pass # TBI
+	#	def __ne__(a,b):
+
+		def test_cmp(self):
+			pass # TBI
+	#	def __cmp__(a,b):
+
+		def test_mul(self):
+			pass # TBI
+	#	def __mul__(a,b):
+
+		def test_inv(self):
+			pass # TBI
+	#	def inv(a):
+
+		def test_getitem(self):
+			pass # TBI
+	#	def __getitem__(self, i):
+
+		def test_of(self):
+			pass # TBI
+	#	def of(self, input):
+
+		def test_inv_mg(self):
+			pass # TBI
+	#	def inv_img(self, dst):
+
+		def test_sgn(self):
+			pass # TBI
+	#	def sgn(self):
+
+		def test_parity(self):
+			pass # TBI
+	#	def parity(self):
+
+		def test_oldparity(self):
+			pass # TBI
+	#	def oldparity(self):
+
+		def test_oldsgn(self):
+			pass # TBI
+	#	def oldsgn(self):
+
+		def test_cycle_decomposition(self):
+			pass # TBI
+	#	def cycle_decomposition(self):
+
+		def test_cycle_type(self):
+			pass # TBI
+	#	def cycle_type(self):
+
+		def test_transposition_decomposition(self):
+			pass # TBI
+	#	def transposition_decomposition(self):
+
+		def test_scan(self):
+			pass # TBI
+	#	def scan(self, cycles_string, n):
+
+	#	# e.g. [[1,2],[3,4]]
+	#	# xxx this method also needs some comments. :)
+		def test_cycle_fill(self):
+			pass # TBI
+	#	def cycle_fill(self, cycles, n):
+
+	#	def __str__(self):
+		def test_str(self):
+			pass # TBI
+
+	#	def __repr__(self):
+		def test_repr(self):
+			pass # TBI
+
+		# ----------------------------------------------------------------
+		def test_from_cycles(self):
+			pass # TBI
+		#def from_cycles(cycles, n):
+
+		def test_from_cycle(self):
+			pass # TBI
+		#def from_cycle(cycle, n):
+
+		def test_from_cycle_type(self):
+			pass # TBI
+		# Example:  [3 2 1] --> ((1 2 3)(4 5)(6))
+		#def from_cycle_type(ct):
+
+		def test_cycle_type_reps(self):
+			pass # TBI
+		#def cycle_type_reps(n):
+
+		# ----------------------------------------------------------------
+		## Auxiliary function.
+		## Converts a list of sorted numbers into a list of pairs of elements and
+		## repetition counts.  Example( with commas suppressed):
+		## [4 4 4  3 3 3 3 3  2  1 1] -> [[4 3] [3 5] [2 1] [1 2]]
+		#def type_to_counts(ct):
+		def test_type_to_counts(self):
+			pass # TBI
+
+		# ----------------------------------------------------------------
+		## Counts the number of permutations in Sn which share a given
+		## cycle type.  This is best explained by example.
+		## * Cycle type = [3 2 2]
+		## * I have 7 boxes to fill: [ _ _ _ | _ _ | _ _ ].
+		## * There are 7! = 5040 ways to put the numbers 1-7 in those
+		##   boxes.
+		## * This overcounts.  For example, [1 2 3][4 5][6 7]
+		##   is equivalent to [2 3 1][4 5][6 7] -- these are the same
+		##   permutation.  Likewise [1 2 3][4 5][6 7] is the same
+		##   permutation as [1 2 3][6 7][4 5].
+		## * Divide 5040 by 3*2*2, to count cyclic shifts within a cycle.
+		## * Divide by 2!, since adjacent two-cycles can be transposed.
+		##   E.g. (1 2 3)(4 5)(6 7) is equivalent to (1 2 3)(6 7)(4 5).
+		#def num_ct_reps(ct):
+		def test_num_ct_reps(self):
+			pass # TBI
+
+		#def params_from_string(params_string):
+		def test__params_from_string(self):
+			pass # TBI
+
+		#def from_string(value_string, params_string):
+		def test_from_string(self):
+			pass # TBI
+
+		def test_kth_pmtc(self):
+			pass # TBI
+		#def kth_pmtc(k, n, nfact):
+
+		def test_identity_pmtc(self):
+			pass # TBI
+
+		def test_rand_pmtc(self):
+		#def rand_pmtc(N):
+			pass # TBI
+
+		## ----------------------------------------------------------------
+		# Auxiliary routine for sort_pmtcs() below.
+		# Return -1 if a <  b;
+		# return  0 if a == b;
+		# return +1 if a >  b.
+		# Compare lexically on cycle types.
+		# Break ties within cycle type by lexical compare on image maps.
+		#def pmtc_cmp(ta, tb):
+		def test_pmtc_cmp(self):
+			pass # TBI
+
+		#def sort_pmtcs(list):
+		def test_sort_pmtcs(self):
+			pass # TBI
 
 	# ----------------------------------------------------------------
 	unittest.main()
