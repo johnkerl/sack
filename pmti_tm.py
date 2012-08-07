@@ -532,3 +532,114 @@ def sort_pmtis(list):
 
 	for i in range(0, m):
 		list[i] = pairs[i][0]
+
+
+# ================================================================
+import unittest
+if __name__ == '__main__':
+
+	class test_cases(unittest.TestCase):
+		def test___init__(self):
+			pass # to be implemented
+
+		def test___eq__(self):
+			pass # to be implemented
+
+		def test___ne__(self):
+			pass # to be implemented
+
+		def test___cmp__(self):
+			pass # to be implemented
+
+		def test___mul__(self):
+			pass # to be implemented
+
+		def test_check_permutation(self):
+			pass # to be implemented
+
+		def test_inv(self):
+			pass # to be implemented
+
+		def test_scan(self):
+			pass # to be implemented
+
+		def test_cycle_fill(self):
+			pass # to be implemented
+
+		def test___str__(self):
+			pass # to be implemented
+
+		def test___repr__(self):
+			pass # to be implemented
+
+		def test___getitem__(self):
+			pass # to be implemented
+
+		def test_of(self):
+			pass # to be implemented
+
+		def test_inv_img(self):
+			pass # to be implemented
+
+		def test_sgn(self):
+			pass # to be implemented
+
+		def test_parity(self):
+			pass # to be implemented
+
+		def test_oldparity(self):
+			pass # to be implemented
+
+		def test_oldsgn(self):
+			pass # to be implemented
+
+		def test_cycle_decomposition(self):
+			pass # to be implemented
+
+		def test_cycle_decomposition_non_triv(self):
+			pass # to be implemented
+
+		def test_cycle_type(self):
+			pass # to be implemented
+
+		def test_cycle_counts(self):
+			pass # to be implemented
+
+		def test_transposition_decomposition(self):
+			pass # to be implemented
+
+		def test_from_cycles(self):
+			pass # to be implemented
+
+		def test_from_cycle(self):
+			pass # to be implemented
+
+		def test_from_cycle_type(self):
+			pass # to be implemented
+
+		def test_cycle_type_reps(self):
+			pass # to be implemented
+
+		def test_params_from_string(self):
+			pass # to be implemented
+
+		def test_from_string(self):
+			pass # to be implemented
+
+		def test_identity_pmti(self):
+			pass # to be implemented
+
+		def test_kth_pmti(self):
+			pass # to be implemented
+
+		def test_rand_pmti(self):
+			pass # to be implemented
+
+		def test_pmti_cmp(self):
+			pass # to be implemented
+
+		def test_sort_pmtis(self):
+			pass # to be implemented
+
+	# ----------------------------------------------------------------
+	unittest.main()

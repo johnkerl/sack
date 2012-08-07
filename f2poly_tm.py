@@ -406,3 +406,35 @@ class f2poly_t:
 #		return this->zcount_one_bits()
 #	else
 #		return this->parts[0] & 1
+
+# ================================================================
+import unittest
+if __name__ == '__main__':
+
+	class test_cases(unittest.TestCase):
+		def test_f2poly_from_string(self):
+			pass # to be implemented
+
+		def test_idegree(self):
+			pass # to be implemented
+
+		def test_imul(self):
+			pass # to be implemented
+
+		def test_iquot_and_rem(self):
+			pass # to be implemented
+
+		def test_imod(self):
+			pass # to be implemented
+
+		def test_iexp(self):
+			pass # to be implemented
+
+		def test_igcd(self):
+			pass # to be implemented
+
+		def test_iext_gcd(self):
+			pass # to be implemented
+
+	# ----------------------------------------------------------------
+	unittest.main()

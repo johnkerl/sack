@@ -137,3 +137,54 @@ def from_string(value_string, params_string):
 #a = cl2_t(1, 0x66, 8)
 #b = cl2_t(1, 0x35, 8)
 #c = a * b
+
+
+# ================================================================
+import unittest
+if __name__ == '__main__':
+
+	class test_cases(unittest.TestCase):
+		def test___init__(self):
+			pass # to be implemented
+
+		def test___mul__(self):
+			pass # to be implemented
+
+		def test___eq__(self):
+			pass # to be implemented
+
+		def test___ne__(self):
+			pass # to be implemented
+
+		def test___lt__(self):
+			pass # to be implemented
+
+		def test___le__(self):
+			pass # to be implemented
+
+		def test___gt__(self):
+			pass # to be implemented
+
+		def test___ge__(self):
+			pass # to be implemented
+
+		def test_inv(self):
+			pass # to be implemented
+
+		def test_scan(self):
+			pass # to be implemented
+
+		def test___str__(self):
+			pass # to be implemented
+
+		def test___repr__(self):
+			pass # to be implemented
+
+		def test_params_from_string(self):
+			pass # to be implemented
+
+		def test_from_string(self):
+			pass # to be implemented
+
+	# ----------------------------------------------------------------
+	unittest.main()

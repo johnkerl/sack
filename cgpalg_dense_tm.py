@@ -145,3 +145,42 @@ class cgpalg_t:
 #	obj = cgpalg_t([1], [1])
 #	obj.scan(value_string, cgpalg_array)
 #	return obj
+
+
+# ================================================================
+import unittest
+if __name__ == '__main__':
+
+	class test_cases(unittest.TestCase):
+		def test___init__(self):
+			pass # to be implemented
+
+		def test___add__(self):
+			pass # to be implemented
+
+		def test___sub__(self):
+			pass # to be implemented
+
+		def test_index_of(self):
+			pass # to be implemented
+
+		def test___mul__(self):
+			pass # to be implemented
+
+		def test___eq__(self):
+			pass # to be implemented
+
+		def test___ne__(self):
+			pass # to be implemented
+
+		def test___neg__(self):
+			pass # to be implemented
+
+		def test___str__(self):
+			pass # to be implemented
+
+		def test___repr__(self):
+			pass # to be implemented
+
+	# ----------------------------------------------------------------
+	unittest.main()

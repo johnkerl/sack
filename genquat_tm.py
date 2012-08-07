@@ -120,3 +120,42 @@ def from_string(value_string, params_string):
 	obj = genquat_t(0, 0, n)
 	obj.scan(value_string, n)
 	return obj
+
+
+# ================================================================
+import unittest
+if __name__ == '__main__':
+
+	class test_cases(unittest.TestCase):
+		def test___init__(self):
+			pass # to be implemented
+
+		def test___eq__(self):
+			pass # to be implemented
+
+		def test___ne__(self):
+			pass # to be implemented
+
+		def test___mul__(self):
+			pass # to be implemented
+
+		def test_inv(self):
+			pass # to be implemented
+
+		def test_scan(self):
+			pass # to be implemented
+
+		def test___str__(self):
+			pass # to be implemented
+
+		def test___repr__(self):
+			pass # to be implemented
+
+		def test_params_from_string(self):
+			pass # to be implemented
+
+		def test_from_string(self):
+			pass # to be implemented
+
+	# ----------------------------------------------------------------
+	unittest.main()

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# ================================================================
+# Given a Python module, prints a unit-test skeleton.
+# John Kerl 2012-08-06
+# ================================================================
+
+cat <<_EOF
+
+# ================================================================
+import unittest
+if __name__ == '__main__':
+
+	class test_cases(unittest.TestCase):
+_EOF
+
+names=$(grep -P '^\s*def.*:$' "$@" | grep -w def | sed -e 's/def  *//' -e 's/(.*//')
+for name in $names; do
+	echo -e "\t\tdef test_$name(self):"
+	echo -e "\t\t\tpass # to be implemented"
+	echo ""
+done
+
+cat <<_EOF
+	# ----------------------------------------------------------------
+	unittest.main()
+_EOF

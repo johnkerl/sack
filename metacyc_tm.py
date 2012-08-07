@@ -181,3 +181,45 @@ def from_string(value_string, params_string):
 	obj = metacyc_t(0, 0, p, q, t)
 	obj.scan(value_string, p, q, t)
 	return obj
+
+
+# ================================================================
+import unittest
+if __name__ == '__main__':
+
+	class test_cases(unittest.TestCase):
+		def test_find_t(self):
+			pass # to be implemented
+
+		def test___init__(self):
+			pass # to be implemented
+
+		def test___eq__(self):
+			pass # to be implemented
+
+		def test___ne__(self):
+			pass # to be implemented
+
+		def test___mul__(self):
+			pass # to be implemented
+
+		def test_inv(self):
+			pass # to be implemented
+
+		def test_scan(self):
+			pass # to be implemented
+
+		def test___str__(self):
+			pass # to be implemented
+
+		def test___repr__(self):
+			pass # to be implemented
+
+		def test_params_from_string(self):
+			pass # to be implemented
+
+		def test_from_string(self):
+			pass # to be implemented
+
+	# ----------------------------------------------------------------
+	unittest.main()

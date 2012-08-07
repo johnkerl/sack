@@ -114,3 +114,63 @@ def install_table(cayley_table_with_names):
 				if (z.code == e.code):
 					spec_tables.inv_table.append(j)
 					continue
+
+
+# ================================================================
+import unittest
+if __name__ == '__main__':
+
+	class test_cases(unittest.TestCase):
+		def test_name_to_index(self):
+			pass # to be implemented
+
+		def test_name_to_index_or_die(self):
+			pass # to be implemented
+
+		def test___init__(self):
+			pass # to be implemented
+
+		def test___mul__(self):
+			pass # to be implemented
+
+		def test___eq__(self):
+			pass # to be implemented
+
+		def test___ne__(self):
+			pass # to be implemented
+
+		def test___lt__(self):
+			pass # to be implemented
+
+		def test___le__(self):
+			pass # to be implemented
+
+		def test___gt__(self):
+			pass # to be implemented
+
+		def test___ge__(self):
+			pass # to be implemented
+
+		def test_inv(self):
+			pass # to be implemented
+
+		def test_scan(self):
+			pass # to be implemented
+
+		def test___str__(self):
+			pass # to be implemented
+
+		def test___repr__(self):
+			pass # to be implemented
+
+		def test_params_from_string(self):
+			pass # to be implemented
+
+		def test_from_string(self):
+			pass # to be implemented
+
+		def test_install_table(self):
+			pass # to be implemented
+
+	# ----------------------------------------------------------------
+	unittest.main()
