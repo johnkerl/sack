@@ -7,31 +7,29 @@
 # kerl.john.r@gmail.com
 # 2007-05-31
 # ================================================================
-
-import re
-import copy
-import sys
-import random
-import sackint
-#import sackmat_m
-
+#
 # Permutations with cycle-decomposition I/O.
-
+#
 # Python arrays are zero-up.  Permutations are almost universally taken
 # to be on the set {1, 2, 3, ..., n}.  So, elements[0] is always 0;
 # elements[1] through elements[n] are images.
-
+#
 # Naming convention:
 # * Something called "images" is an externally visible list of the
 #   form [3, 1, 2, 4].
 # * Something called "zimages" is an internal list of the
 #   form [0, 3, 1, 2, 4].
+# ================================================================
+
+import re, copy, sys, random
+import sackint
+import unittest
 
 # ================================================================
 class pmtc_t:
 
 	def __init__(self, images, n):
-		if (len(images) != n):
+		if len(images) != n:
 			raise RuntimeError
 		self.n = n
 		self.zimages = [0] + copy.copy(images)
@@ -138,7 +136,6 @@ class pmtc_t:
 			return 0
 		else:
 			return 1
-
 
 	# Bubble sort and count the swaps.
 	def oldparity(self):
@@ -520,6 +517,8 @@ def identity_pmtc(n):
 # integer uniformly between 0 and N-k-1; applying that image amounts to doing
 # a swap.
 
+# xxx to do:  implement knuth's algorithm (far simpler).
+
 def rand_pmtc(N):
 	zimages = range(0, N+1)
 	unused_start = 1
@@ -611,3 +610,92 @@ def sort_pmtcs(list):
 
 	for i in range(0, m):
 		list[i] = pairs[i][0]
+
+# ================================================================
+if __name__ == '__main__':
+
+	# ----------------------------------------------------------------
+	class test_pmtc(unittest.TestCase):
+		def setUp(self):
+			print 'setup'
+		def test_foo(self):
+			print 'testfoo'
+
+#	def __init__(self, images, n):
+#		if len(images) != n:
+#			raise RuntimeError
+#	def __eq__(a,b):
+#	def __ne__(a,b):
+#	def __cmp__(a,b):
+#	def __mul__(a,b):
+#	def check_permutation(self):
+#	def inv(a):
+#	def __getitem__(self, i):
+#
+#	def of(self, input):
+#	def inv_img(self, dst):
+#	def sgn(self):
+#	def parity(self):
+#	def oldparity(self):
+#	def oldsgn(self):
+#	def cycle_decomposition(self):
+#	def cycle_type(self):
+#	def transposition_decomposition(self):
+#	def scan(self, cycles_string, n):
+#
+#	# e.g. [[1,2],[3,4]]
+#	# xxx this method also needs some comments. :)
+#	def cycle_fill(self, cycles, n):
+#	def __str__(self):
+#	def __repr__(self):
+
+	# ----------------------------------------------------------------
+	#def from_cycles(cycles, n):
+	#def from_cycle(cycle, n):
+	# ----------------------------------------------------------------
+	# Example:  [3 2 1] --> ((1 2 3)(4 5)(6))
+	#def from_cycle_type(ct):
+	# ----------------------------------------------------------------
+	#def cycle_type_reps(n):
+	# ----------------------------------------------------------------
+	## Auxiliary function.
+	## Converts a list of sorted numbers into a list of pairs of elements and
+	## repetition counts.  Example( with commas suppressed):
+	## [4 4 4  3 3 3 3 3  2  1 1] -> [[4 3] [3 5] [2 1] [1 2]]
+	#def type_to_counts(ct):
+	# ----------------------------------------------------------------
+	## Counts the number of permutations in Sn which share a given
+	## cycle type.  This is best explained by example.
+	## * Cycle type = [3 2 2]
+	## * I have 7 boxes to fill: [ _ _ _ | _ _ | _ _ ].
+	## * There are 7! = 5040 ways to put the numbers 1-7 in those
+	##   boxes.
+	## * This overcounts.  For example, [1 2 3][4 5][6 7]
+	##   is equivalent to [2 3 1][4 5][6 7] -- these are the same
+	##   permutation.  Likewise [1 2 3][4 5][6 7] is the same
+	##   permutation as [1 2 3][6 7][4 5].
+	## * Divide 5040 by 3*2*2, to count cyclic shifts within a cycle.
+	## * Divide by 2!, since adjacent two-cycles can be transposed.
+	##   E.g. (1 2 3)(4 5)(6 7) is equivalent to (1 2 3)(6 7)(4 5).
+	#def num_ct_reps(ct):
+	## ----------------------------------------------------------------
+	#def params_from_string(params_string):
+	#def from_string(value_string, params_string):
+	#def kth_pmtc(k, n, nfact):
+	#def identity_pmtc(n):
+	## ================================================================
+	#def rand_pmtc(N):
+	## ----------------------------------------------------------------
+	# Auxiliary routine for sort_pmtcs() below.
+	# Return -1 if a <  b;
+	# return  0 if a == b;
+	# return +1 if a >  b.
+	# Compare lexically on cycle types.
+	# Break ties within cycle type by lexical compare on image maps.
+	#def pmtc_cmp(ta, tb):
+	# ----------------------------------------------------------------
+	#def sort_pmtcs(list):
+
+	# ----------------------------------------------------------------
+	unittest.main()
+
