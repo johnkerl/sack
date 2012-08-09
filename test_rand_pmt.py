@@ -8,16 +8,25 @@
 # 2007-05-31
 # ================================================================
 
+import sys,copy
 import pmtc_tm
 import pmti_tm
-import copy
 
 #count=80000
-count=10000
-N=100
-#N=6
+count=100000
+#N=100
+N=6
+do_bad = False
+if len(sys.argv) >= 2:
+	N = int(sys.argv[1])
+if len(sys.argv) == 3:
+	do_bad = True
+
 for i in range(0, count):
-	pi = pmtc_tm.rand_pmtc(N)
-	ct = pi.cycle_type()
-	print ct
-	#print pi
+	if do_bad:
+		pi = pmtc_tm.bad_rand_pmtc(N)
+	else:
+		pi = pmtc_tm.rand_pmtc(N)
+	#ct = pi.cycle_type()
+	#print ct
+	print pi

@@ -515,7 +515,7 @@ def identity_pmtc(n):
 # integer uniformly between 0 and N-k-1; applying that image amounts to doing
 # a swap.
 
-# xxx to do:  implement knuth's algorithm (far simpler).
+# Later note:  It turns out that this is Knuth's algorithm.
 
 def rand_pmtc(N):
 	zimages = range(0, N+1)
@@ -547,6 +547,23 @@ def rand_pmtc(N):
 		# understand.)
 		unused_start += 1
 		num_unused   -= 1
+
+	return pmtc_t(zimages[1:], N)
+
+def bad_rand_pmtc(N):
+	# Knuth's anti-algorithm.  The code here is an experiment
+	# to see what kind of distribution results.
+	zimages = range(0, N+1)
+
+	for k in range(1, N+1):
+		# Select a pseudorandom element from the pool of used *and* unused images.
+		# Python's randint(a, b) includes both endpoints.
+		u = random.randint(1, N)
+
+		# Swap it into place.
+		temp       = zimages[u]
+		zimages[u] = zimages[k]
+		zimages[k] = temp
 
 	return pmtc_t(zimages[1:], N)
 
