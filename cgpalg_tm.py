@@ -13,6 +13,8 @@ import re
 import copy
 
 # ================================================================
+# Type module for complex group algebras CG, with sparse storage.
+#
 # Initial attempt at complex group algebras CG for small finite groups G.  This
 # could, conceivably, be generalized to FG (for arbitrary user-specified
 # fields) or RG (for arbitrary user-specified rings).

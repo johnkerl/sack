@@ -7,9 +7,9 @@
 # kerl.john.r@gmail.com
 # 2007-05-31
 # ================================================================
-#
-# Permutations with cycle-decomposition I/O.
-#
+
+# Type module for permutations with cycle-decomposition I/O.
+
 # Python arrays are zero-up.  Permutations are almost universally taken
 # to be on the set {1, 2, 3, ..., n}.  So, elements[0] is always 0;
 # elements[1] through elements[n] are images.

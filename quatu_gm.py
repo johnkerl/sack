@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for the quaternion unit group.
+
 import quatu_tm
 
 def get_elements_str(params_string):

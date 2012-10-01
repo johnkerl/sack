@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for Gaussian integers (m+ni for integer m,n).
+
 import re
 import copy
 

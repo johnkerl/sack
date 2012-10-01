@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for the generalized quaternion group.
+
 import genquat_tm
 
 def get_elements_str(params_string):

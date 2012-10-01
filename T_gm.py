@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for the T group.
+
 import T_tm
 
 def get_elements_str(params_string):

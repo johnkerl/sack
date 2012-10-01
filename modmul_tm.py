@@ -8,6 +8,9 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for the group of integers relatively prime to n, with
+# multiplication.
+
 import re
 import copy
 

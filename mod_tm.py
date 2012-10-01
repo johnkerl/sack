@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for the ring of integers mod n.
+
 import sys
 import re
 import copy

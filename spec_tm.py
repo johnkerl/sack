@@ -88,7 +88,8 @@ def install_table(cayley_table_with_names):
 	# I should do some checking on the cayley_table_with_names -- the user
 	# might have given me input which is non-square, or even ragged.
 
-	# Fill it with zeroes, so the matrix has the correct size and may be indexed.
+	# Fill it with zeroes, so the matrix has the correct size and may be
+	# indexed.
 	row = [1] * n
 	for i in range(0, n):
 		spec_tables.mul_table.append(copy.copy(row))
@@ -99,8 +100,9 @@ def install_table(cayley_table_with_names):
 			spec_tables.mul_table[i][j] = name_to_index_or_die(cayley_table_with_names[i][j], spec_tables.name_table)
 
 	# Populate the inv table.
-	# I am being crass here.  I'm assuming the Cayley table is good before I start.
-	# The good news is that the is-group functions don't use the inv table.
+	# I am being crass here.  I'm assuming the Cayley table is good before I
+	# start.  The good news is that the is-group functions don't use the inv
+	# table.
 	G = []
 	for i in range(0, n):
 		G.append(spec_t(i))

@@ -10,8 +10,9 @@
 
 import re
 
-# The T group (the third nonabelian group of order 12, other than A4 and D6)
-# may be thought of as Z3 semidirect Z4, where Z4 acts on Z3 by inversion.
+# Type module for the T group (the third nonabelian group of order 12, other
+# than A4 and D6).  It may be thought of as Z3 semidirect Z4, where Z4 acts on
+# Z3 by inversion.
 #
 # (ai, aj)(bi, bj) = (ai aj(bi), aj bj)
 #

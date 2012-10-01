@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for the group of Pauli matrices.
+
 import re
 
 # sigmax =  0  1

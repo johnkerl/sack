@@ -10,6 +10,9 @@
 
 import re
 
+# Type module for the Klein-4 group ("Viergruppe" in German, hence the
+# traditional "V4").
+
 # e a b c
 # a e c b
 # b c e a

@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for permutation group S_n, with cycle-decomposition I/O.
+
 import pmtc_tm
 import sackint
 

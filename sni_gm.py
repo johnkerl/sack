@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for permutation group S_n, with image-map I/O.
+
 import pmti_tm
 import sackint
 

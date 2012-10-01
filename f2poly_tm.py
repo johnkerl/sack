@@ -8,6 +8,8 @@
 # 2008-11-14
 # ================================================================
 
+# Type module for F2[x]: polynomials with coefficients in the finite field F2.
+
 import sys
 import re
 import copy

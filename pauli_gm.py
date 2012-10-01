@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for the Pauli matrices.
+
 import pauli_tm
 import sackgrp
 

@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for the metacyclic group parameterized by m and n.
+
 import re
 import sackint
 
@@ -88,7 +90,6 @@ import sackint
 # ----------------------------------------------------------------
 
 
-
 # ================================================================
 # Auxiliary function:
 # Second component of return value is t.
@@ -110,7 +111,7 @@ class metacyc_t:
 			print "Got p =", p, "q =", q, "t =", t
 			raise RuntimeError
 
-		# xxx jrk 2006-11-28 allow trivial homomorphisms.
+		# xxx jrk 2006-11-28:  allow trivial homomorphisms.
 		#if ((t % p) == 1):
 		#	print "metacyc:  t must not be 1 mod p"
 		#	print "Got p =", p, "q =", q, "t =", t

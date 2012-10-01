@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for the quaternion unit group.
+
 import re
 
 quatu_mul_table = [

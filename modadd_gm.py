@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for the group of integers mod n with addition.
+
 import modadd_tm
 
 def get_elements_str_aux(mod_array):

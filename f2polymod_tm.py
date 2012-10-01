@@ -8,6 +8,10 @@
 # 2008-11-14
 # ================================================================
 
+# Type module for R=F2[x]/<f(x)>.  F2[x] is polynomials with coefficients in
+# the finite field F2.  If f is irreducible then R is a finite field of
+# order 2^n where n = deg(f).
+
 import sys
 import re
 import copy

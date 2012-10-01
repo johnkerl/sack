@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for the group of integers mod n with addition.
+
 import sys
 import re
 import copy

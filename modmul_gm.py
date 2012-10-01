@@ -12,6 +12,9 @@ import modmul_tm
 import modadd_gm
 import sackint
 
+# Type module for the group of integers relatively prime to n, with
+# multiplication.  Or, direct product of several such.
+
 # ----------------------------------------------------------------
 # Example:
 # Mods = 4,5

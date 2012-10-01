@@ -8,6 +8,9 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for the Klein-4 group ("Viergruppe" in German, hence the
+# traditional "V4").
+
 import v4_tm
 
 def get_elements_str(params_string):

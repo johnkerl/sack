@@ -9,16 +9,16 @@
 # ================================================================
 
 import re
-import copy # xxx temp
+import copy
 
-# The Clifford group with (hard-coded) negative of Simon's quadratic form.
-# See Simon's text.
+# Type module for the Clifford group with (hard-coded) negative of Simon's
+# quadratic form.  See Simon's text.
 #
 # alpha eA beta eB = alpha beta chi(A, B) e{A xor B}.
 # But also with ei^2 = -1.
 # A and B are multi-indices; alpha and beta are signs.
 #
-# Explanaiton of chi(A, B) is by example:
+# Explanation of chi(A, B) is by example:
 #
 # * a = e2 e3 e6 e7; b = e1 e3 e5 e6.
 # * a*b = e2 e3 e6 e7 | e1 e3 e5 e6.  Then sort:

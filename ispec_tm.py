@@ -8,6 +8,9 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for an arbitrary user-defined group which is specified entirely
+# by its Cayley table.
+
 import re
 import copy
 import ispec_tbl
@@ -65,8 +68,9 @@ def install_table(table):
 	n = len(table)
 
 	# Populate the inv table.
-	# I am being crass here.  I'm assuming the Cayley table is good before I start.
-	# The good news is that the is-group functions don't use the inv table.
+	# I am being crass here.  I'm assuming the Cayley table is good before I
+	# start.  The good news is that the is-group functions don't use the inv
+	# table.
 	G = []
 	for i in range(0, n):
 		G.append(ispec_t(i))

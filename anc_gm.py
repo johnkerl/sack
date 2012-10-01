@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for alternating permutations A_n, using cycle-decomposition I/O.
+
 import pmtc_tm
 import sackint
 

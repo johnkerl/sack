@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Group module for alternating permutations A_n, using image-map I/O.
+
 import pmti_tm
 import sackint
 

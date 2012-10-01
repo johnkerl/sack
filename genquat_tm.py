@@ -8,6 +8,8 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for generalized quaternions.
+
 # Presentation:
 # < a, b | a^2n = 1, b^2 = a^n, ab = ba^-1 >
 #
@@ -47,9 +49,6 @@
 import re
 
 class genquat_t:
-	#i = 0
-	#j = 0
-	#n = 0
 
 	def __init__(self, argi, argj, argn):
 		argi %= argn + argn;

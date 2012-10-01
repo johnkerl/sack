@@ -8,13 +8,13 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for permutations with image-map I/O.
+
 import re
 import copy
 import random
 import sackint
 import uniqc_m
-
-# Permutations with image-map I/O.
 
 class pmti_t:
 

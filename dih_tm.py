@@ -8,12 +8,11 @@
 # 2007-05-31
 # ================================================================
 
+# Type module for the dihedral group on n vertices.
+
 import re
 
 class dih_t:
-	#rot  = 0
-	#flip = 0
-	#n    = 0
 
 	def __init__(self, argrot, argflip, argn):
 		self.n    = argn

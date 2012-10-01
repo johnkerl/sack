@@ -9,9 +9,9 @@
 # ================================================================
 
 import re
-import copy # xxx temp
+import copy
 
-# The Clifford group with (hard-coded) Simon's quadratic form.
+# Type module for the Clifford group with (hard-coded) Simon's quadratic form.
 # See Simon's text.
 #
 # alpha eA beta eB = alpha beta chi(A, B) e{A xor B}.
