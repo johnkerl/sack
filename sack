@@ -1,79 +1,100 @@
 #!/usr/bin/python -Wall
 
 # ================================================================
+# This is a command-line program for doing some elementary computations on
+# small finite groups:  printing cayley tables, finding element orders and max
+# orders, and so on.  I wrote it in grad school, back in 2003-2005 or so, when
+# I found my abstract-algebra courses to be just a little too abstract for my
+# concrete tastes.
+#
+# ----------------------------------------------------------------
+# You can use "sack --help" for on-line help:
+#
+#   shell-prompt $ sack --help
+#   Usage: ./sack {group type} {command} {command arguments ...}
+#
+#   Example: "./sack d:4 center ."
+#
+#   Group types: T a ai cl2 d ispec metacyc modadd modmul pauli q q8 s si spec v4
+#
+#   Commands: abelian add associative caytbl center close closed commutator
+#   conj_classes cyclic cycsgr cycsgrs derived elts eorder exp find_id
+#   has_inverses has_unique_id inverse inverses isgroup max_order mul nilpotent
+#   order orders solvable subgroup
+#
+# Your $PYTHONPATH should include the directory where you installed this file.
+#
+# ----------------------------------------------------------------
+# The group types and commmands are listed above.  To get information
+# about the arguments needed for a particular command, omit them.
+# For example:
+#
+#   shell-prompt$ sack s:4 center
+#   center: 1 argument(s) needed; got 0.
+#
+# Most commands take a "." argument meaning "operate on all group elements".
+# For example:
+#
+#   (Center of dihedral group on four vertices)
+#   shell-prompt$ sack d:4 center .
+#   0,0
+#   2,0
+#
+#   (All permutations on four points)
+#   shell-prompt$ sack s:4 elements .
+#   1
+#   1,4
+#   1,3
+#   1,2
+#   2,4
+#   2,3
+#   3,4
+#   1,4,3
+#   1,4,2
+#   1,3,4
+#   1,3,2
+#   1,2,4
+#   1,2,3
+#   2,4,3
+#   2,3,4
+#   1,4:2,3
+#   1,3:2,4
+#   1,2:3,4
+#   1,4,2,3
+#   1,4,3,2
+#   1,3,2,4
+#   1,3,4,2
+#   1,2,4,3
+#   1,2,3,4
+#
+# ----------------------------------------------------------------
+# The input/output notation are more programmer-friendly than
+# user-friendly; I wrote this program for myself to satisfy (in
+# part) my preference for plain text I/O.  Also, I intended this
+# program to be self-educational; for information about how it
+# works I tend to use the code itself as documentation.
+#
+# SACK does for small finite groups what RUFFL does for finite
+# fields (https://github.com/johnkerl/ruffl).
+#
+# I don't expect too many people will find SACK useful -- on the
+# other hand it might happen to be just what you're looking for.
+# Enjoy!
+#
+# ================================================================
 # This software is released under the terms of the GNU GPL.
 # Please see LICENSE.txt in the same directory as this file.
+#
 # John Kerl
 # kerl.john.r@gmail.com
 # 2007-05-31
-#
-# The current directory should be in $PYTHONPATH.
-# Please do "./sack --help" for on-line help.
-# ================================================================
-
-# ================================================================
-# To do:
-# * from_file stuff
-# * sack d center .: give usage
-# * __lt__ et al. everywhere
-# * deepsort method -- into sackset?  use this post-close.
-# * dih 1:0 vs. 1,0 -- fix error handling
-# * pmt sgn method: bubble sort w/ swap count
-
-# Commands to implement:
-# * centralizer
-# * conjbyelt
-# * conj_classes
-# * cosets L/R
-# * internal dp
-# * is_subgroup
-# * normalizer
-# * normal_subgroup
-# * powsgr
-# * torsion
-
-# * ascendant
-# * aut_group
-# * cap
-# * cayley_sn
-# * core
-# * cosets
-# * inn
-
-# ----------------------------------------------------------------
-# Groups:
-# * sn an sni ani
-# * fpell3 ftell5
-# * triv testing smodadd smodmul miquatadd miquatmul smiquatadd smiquatmul
-# * z2ipolymodadd z2ipolymodmul zppolyadd zppolymul tetra cube icos slgf glgf dgf
-
-# ----------------------------------------------------------------
-# ring stuff -- ops, at least
-# kalk-like interface
-
-# ----------------------------------------------------------------
-# Wreath product -- !
-
-# ----------------------------------------------------------------
-# Incorporate:
-# * PMATLIB, all
-# * SPFFL, all
-#   - have a single poly class
-#   - have a single mod  class
-#   - have a single rat  class
-#   - have a single matrix class.  methods from PMATLIB & tmatrix.h.
-#   - tmvpoly
-# * kbc, with Python eval?
-# * kalk
-# * groebner:
-#   - generalized division alg'm
-# * new & improved aut-group computation (need generators)?
 # ================================================================
 
 from __future__ import division # 1/2 = 0.5, not 0.
 import sys
 import re
 
+# "Type" modules:  for elements of various groups.
 import dih_tm
 import genquat_tm
 import metacyc_tm
@@ -90,6 +111,7 @@ import spec_tm
 import ispec_tm
 #import semi_tm
 
+# "Group" modules:  for getting *all* elements of various groups.
 import dn_gm
 import qn_gm
 import metacyc_gm
@@ -113,6 +135,7 @@ from sackgrp import *
 from sacktuple import *
 
 # ----------------------------------------------------------------
+# Short-hands for type names
 type_lookup = {
 	"d"       : dih_tm,
 	"q"       : genquat_tm,
@@ -134,6 +157,7 @@ type_lookup = {
 	}
 
 # ----------------------------------------------------------------
+# Short-hands for group names
 group_lookup = {
 	"d"       : dn_gm,
 	"q"       : qn_gm,
@@ -184,12 +208,13 @@ def main():
 		sys.exit(1)
 	type_spec = type_lookup[type_name]
 
-	# Hack -- needs documentation
+	# Hack -- needs documentation.  This is for defining ad-hoc groups
+	# from data files.
 	if (type_name == "spec" or type_name == "ispec"):
 		group_spec = group_lookup[type_name]
 		not_used = group_spec.get_elements_str(group_params_string)
 
-	# Hack -- needs documentation
+	# Hack -- needs documentation.
 	# * sys.argv[1] is "semi:v4/s:3/action.txt"
 	# * type_name is "semi"
 	# * group_params_string is "v4/s:3/action.txt"
@@ -265,6 +290,7 @@ def get_group(type_name, group_params_string, file_name):
 	return G
 
 # ----------------------------------------------------------------
+# E.g. "sack s:4 mul 1,2,4 2,3,1" prints "1,4:2,3".
 def cmd_mul(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_min_args(cmd_name, cmd_argv, 1)
 	x = type_spec.from_string(cmd_argv[0], group_params_string)
@@ -289,39 +315,6 @@ def cmd_close(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	close_group(G)
 	print_set_as_column(G)
 
-## ----------------------------------------------------------------
-#def cmd_sub(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
-#	print "cmd_sub stub"
-#
-##elif (cmd_name == "sub"):
-##	x = type_spec.from_string(cmd_argv[0], group_params_string)
-##	for i in range(1, argc):
-##		y = type_spec.from_string(cmd_argv[i], group_params_string)
-##		x = x - y
-##	print x
-#
-## ----------------------------------------------------------------
-#def cmd_quot(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
-#	print "cmd_quot stub"
-#
-##elif (cmd_name == "quot"):
-##	x = type_spec.from_string(cmd_argv[0], group_params_string)
-##	for i in range(1, argc):
-##		y = type_spec.from_string(cmd_argv[i], group_params_string)
-##		x = x / y
-##	print x
-#
-## ----------------------------------------------------------------
-#def cmd_rem(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
-#	print "cmd_rem stub"
-#
-##elif (cmd_name == "rem"):
-##	x = type_spec.from_string(cmd_argv[0], group_params_string)
-##	for i in range(1, argc):
-##		y = type_spec.from_string(cmd_argv[i], group_params_string)
-##		x = x % y
-##	print x
-
 # ----------------------------------------------------------------
 def cmd_exp(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_min_args(cmd_name, cmd_argv, 2)
@@ -333,6 +326,7 @@ def cmd_exp(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 		print y
 
 # ----------------------------------------------------------------
+# E.g. "sack s:4 inverse 1,2,3,4" prints "1,2,3,4 1,4,3,2"
 def cmd_inverse(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_min_args(cmd_name, cmd_argv, 1)
 	for arg in cmd_argv:
@@ -380,6 +374,7 @@ def cmd_elts(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	print_set_as_column(G)
 
 # ----------------------------------------------------------------
+# E.g. "sack s:3 caytbl ."
 def cmd_caytbl(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_num_args(cmd_name, cmd_argv, 1)
 	G = get_group(type_name, group_params_string, cmd_argv[0])
@@ -402,12 +397,40 @@ def cmd_find_id(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 		print "No identity found"
 
 # ----------------------------------------------------------------
+# E.g. "sack s:4 order ." prints 24.
 def cmd_order(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_num_args(cmd_name, cmd_argv, 1)
 	G = get_group(type_name, group_params_string, cmd_argv[0])
 	print len(G)
 
 # ----------------------------------------------------------------
+# E.g. "sack s:4 orders . | left" prints
+#
+# 1       1
+# 1,4     2
+# 1,3     2
+# 1,2     2
+# 2,4     2
+# 2,3     2
+# 3,4     2
+# 1,4,3   3
+# 1,4,2   3
+# 1,3,4   3
+# 1,3,2   3
+# 1,2,4   3
+# 1,2,3   3
+# 2,4,3   3
+# 2,3,4   3
+# 1,4:2,3 2
+# 1,3:2,4 2
+# 1,2:3,4 2
+# 1,4,2,3 4
+# 1,4,3,2 4
+# 1,3,2,4 4
+# 1,3,4,2 4
+# 1,2,4,3 4
+# 1,2,3,4 4
+
 def cmd_orders(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_num_args(cmd_name, cmd_argv, 1)
 	G = get_group(type_name, group_params_string, cmd_argv[0])
@@ -417,6 +440,7 @@ def cmd_orders(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 		print G[k], orders[k]
 
 # ----------------------------------------------------------------
+# E.g. "sack s:4 max_order ." prints 4.
 def cmd_max_order(cmd_name, cmd_argv, group_params_string, type_name,type_spec):
 	check_num_args(cmd_name, cmd_argv, 1)
 	G = get_group(type_name, group_params_string, cmd_argv[0])
@@ -424,6 +448,32 @@ def cmd_max_order(cmd_name, cmd_argv, group_params_string, type_name,type_spec):
 	print m
 
 # ----------------------------------------------------------------
+# E.g. "sack s:4 inverses . | left" prints
+# 1       1
+# 1,4     1,4
+# 1,3     1,3
+# 1,2     1,2
+# 2,4     2,4
+# 2,3     2,3
+# 3,4     3,4
+# 1,4,3   1,3,4
+# 1,4,2   1,2,4
+# 1,3,4   1,4,3
+# 1,3,2   1,2,3
+# 1,2,4   1,4,2
+# 1,2,3   1,3,2
+# 2,4,3   2,3,4
+# 2,3,4   2,4,3
+# 1,4:2,3 1,4:2,3
+# 1,3:2,4 1,3:2,4
+# 1,2:3,4 1,2:3,4
+# 1,4,2,3 1,3,2,4
+# 1,4,3,2 1,2,3,4
+# 1,3,2,4 1,4,2,3
+# 1,3,4,2 1,2,4,3
+# 1,2,4,3 1,3,4,2
+# 1,2,3,4 1,4,3,2
+
 def cmd_inverses(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_num_args(cmd_name, cmd_argv, 1)
 	G = get_group(type_name, group_params_string, cmd_argv[0])
@@ -432,6 +482,8 @@ def cmd_inverses(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 		print x, y
 
 # ----------------------------------------------------------------
+# E.g. "sack s:4 center ." prints 1 (only the identity permutation commutes
+# with all other permutation.
 def cmd_center(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_num_args(cmd_name, cmd_argv, 1)
 	G = get_group(type_name, group_params_string, cmd_argv[0])
@@ -484,6 +536,7 @@ def cmd_has_inverses(cmd_name, cmd_argv, group_params_string, type_name, type_sp
 		print "does not have inverses"
 
 # ----------------------------------------------------------------
+# E.g. "sack s:4 cyclic ." prints "non-cyclic"; "sack modadd:4 cyclic ." prints "cyclic".
 def cmd_cyclic(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_num_args(cmd_name, cmd_argv, 1)
 	G = get_group(type_name, group_params_string, cmd_argv[0])
@@ -493,6 +546,7 @@ def cmd_cyclic(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 		print "non-cyclic"
 
 # ----------------------------------------------------------------
+# E.g. "sack s:4 abelian ." prints "non-abelian"; "sack modadd:4 abelian ." prints "abelian".
 def cmd_abelian(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
 	check_num_args(cmd_name, cmd_argv, 1)
 	G = get_group(type_name, group_params_string, cmd_argv[0])
@@ -623,3 +677,62 @@ def long_usage(argv0):
 # ================================================================
 # Script entry point (top-down programming style, please).
 main()
+
+# ================================================================
+# To do:
+# * from_file stuff
+# * sack d center .: give usage
+# * __lt__ et al. everywhere
+# * deepsort method -- into sackset?  use this post-close.
+# * dih 1:0 vs. 1,0 -- fix error handling
+# * pmt sgn method: bubble sort w/ swap count
+
+# Commands to implement:
+# * centralizer
+# * conjbyelt
+# * conj_classes
+# * cosets L/R
+# * internal dp
+# * is_subgroup
+# * normalizer
+# * normal_subgroup
+# * powsgr
+# * torsion
+
+# * ascendant
+# * aut_group
+# * cap
+# * cayley_sn
+# * core
+# * cosets
+# * inn
+
+# ----------------------------------------------------------------
+# Groups:
+# * sn an sni ani
+# * fpell3 ftell5
+# * triv testing smodadd smodmul miquatadd miquatmul smiquatadd smiquatmul
+# * z2ipolymodadd z2ipolymodmul zppolyadd zppolymul tetra cube icos slgf glgf dgf
+
+# ----------------------------------------------------------------
+# ring stuff -- ops, at least
+# kalk-like interface
+
+# ----------------------------------------------------------------
+# Wreath product -- !
+
+# ----------------------------------------------------------------
+# Incorporate:
+# * PMATLIB, all
+# * SPFFL, all
+#   - have a single poly class
+#   - have a single mod  class
+#   - have a single rat  class
+#   - have a single matrix class.  methods from PMATLIB & tmatrix.h.
+#   - tmvpoly
+# * kbc, with Python eval?
+# * kalk
+# * groebner:
+#   - generalized division alg'm
+# * new & improved aut-group computation (need generators)?
+# ================================================================

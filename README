@@ -1,6 +1,8 @@
 ================================================================
 SACK: A simple abstract-algebra calculator. Includes some elementary group
-routines.  The main entry point is the script called sack.
+routines.
+
+The main entry point is the script called sack.
 
 For documentation please see http://johnkerl.org/doc/kerl-pyaa.pdf
 
