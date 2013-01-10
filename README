@@ -4,7 +4,9 @@ routines.
 
 The main entry point is the script called sack.
 
-For documentation please see http://johnkerl.org/doc/kerl-pyaa.pdf
+For thorough documentation please see http://johnkerl.org/doc/kerl-pyaa.pdf
+
+For a quick reference please see https://github.com/johnkerl/sack/wiki
 
 John Kerl
 kerl.john.r@gmail.com
