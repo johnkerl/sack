@@ -1,0 +1,9 @@
+*.pyc
+
+.swp
+.swo
+.*.swp
+.*.swo
+
+*.bak
+*.sv
