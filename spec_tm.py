@@ -15,163 +15,163 @@ import spec_tables
 import sackgrp
 
 def name_to_index(string, name_table):
-	i = 0
-	for name in name_table:
-		if string == name:
-			return [1, i]
-		i += 1
-	return [0, 0]
+    i = 0
+    for name in name_table:
+        if string == name:
+            return [1, i]
+        i += 1
+    return [0, 0]
 
 def name_to_index_or_die(string, name_table):
-	[found, idx] = name_to_index(string, name_table)
-	if (not found):
-		print "spec scan failure on \"%s\"." % (string)
-		sys.exit(1)
-	return idx
+    [found, idx] = name_to_index(string, name_table)
+    if (not found):
+        print "spec scan failure on \"%s\"." % (string)
+        sys.exit(1)
+    return idx
 
 class spec_t:
-	def __init__(self, argcode):
-		self.code = argcode
+    def __init__(self, argcode):
+        self.code = argcode
 
-	def __mul__(a,b):
-		c = spec_t(spec_tables.mul_table[a.code][b.code]);
-		return c
+    def __mul__(a,b):
+        c = spec_t(spec_tables.mul_table[a.code][b.code]);
+        return c
 
-	def __eq__(a,b):
-		return (a.code == b.code)
-	def __ne__(a,b):
-		return not (a == b)
+    def __eq__(a,b):
+        return (a.code == b.code)
+    def __ne__(a,b):
+        return not (a == b)
 
-	def __lt__(a,b):
-		return (a.code <  b.code)
-	def __le__(a,b):
-		return (a.code <= b.code)
-	def __gt__(a,b):
-		return (a.code >  b.code)
-	def __ge__(a,b):
-		return (a.code >= b.code)
+    def __lt__(a,b):
+        return (a.code <  b.code)
+    def __le__(a,b):
+        return (a.code <= b.code)
+    def __gt__(a,b):
+        return (a.code >  b.code)
+    def __ge__(a,b):
+        return (a.code >= b.code)
 
-	def inv(a):
-		c = spec_t(spec_tables.inv_table[a.code]);
-		return c
+    def inv(a):
+        c = spec_t(spec_tables.inv_table[a.code]);
+        return c
 
-	def scan(self, string):
-		self.code = name_to_index_or_die(string, spec_tables.name_table)
+    def scan(self, string):
+        self.code = name_to_index_or_die(string, spec_tables.name_table)
 
-	def __str__(self):
-		return spec_tables.name_table[self.code]
+    def __str__(self):
+        return spec_tables.name_table[self.code]
 
-	def __repr__(self):
-		return self.__str__()
+    def __repr__(self):
+        return self.__str__()
 
 def params_from_string(params_string):
-	return params_string
+    return params_string
 
 def from_string(value_string, params_string):
-	not_used = params_from_string(params_string)
-	idx = name_to_index_or_die(value_string, spec_tables.name_table)
-	obj = spec_t(idx)
-	return obj
+    not_used = params_from_string(params_string)
+    idx = name_to_index_or_die(value_string, spec_tables.name_table)
+    obj = spec_t(idx)
+    return obj
 
 def install_table(cayley_table_with_names):
-	spec_tables.mul_table  = []
-	spec_tables.inv_table  = []
-	spec_tables.name_table = []
-	n = len(cayley_table_with_names)
+    spec_tables.mul_table  = []
+    spec_tables.inv_table  = []
+    spec_tables.name_table = []
+    n = len(cayley_table_with_names)
 
-	# Populate the name table
-	spec_tables.name_table = copy.copy(cayley_table_with_names[0])
+    # Populate the name table
+    spec_tables.name_table = copy.copy(cayley_table_with_names[0])
 
-	# Populate the mul table.
-	#
-	# I should do some checking on the cayley_table_with_names -- the user
-	# might have given me input which is non-square, or even ragged.
+    # Populate the mul table.
+    #
+    # I should do some checking on the cayley_table_with_names -- the user
+    # might have given me input which is non-square, or even ragged.
 
-	# Fill it with zeroes, so the matrix has the correct size and may be
-	# indexed.
-	row = [1] * n
-	for i in range(0, n):
-		spec_tables.mul_table.append(copy.copy(row))
+    # Fill it with zeroes, so the matrix has the correct size and may be
+    # indexed.
+    row = [1] * n
+    for i in range(0, n):
+        spec_tables.mul_table.append(copy.copy(row))
 
-	# Now put real data in.
-	for i in range(0, n):
-		for j in range(0, n):
-			spec_tables.mul_table[i][j] = name_to_index_or_die(cayley_table_with_names[i][j], spec_tables.name_table)
+    # Now put real data in.
+    for i in range(0, n):
+        for j in range(0, n):
+            spec_tables.mul_table[i][j] = name_to_index_or_die(cayley_table_with_names[i][j], spec_tables.name_table)
 
-	# Populate the inv table.
-	# I am being crass here.  I'm assuming the Cayley table is good before I
-	# start.  The good news is that the is-group functions don't use the inv
-	# table.
-	G = []
-	for i in range(0, n):
-		G.append(spec_t(i))
-	[found, e] = sackgrp.find_id(G)
-	if (found):
-		for i in range(0, n):
-			x = G[i]
-			for j in range(0, n):
-				y = G[j]
-				z = x*y
-				if (z.code == e.code):
-					spec_tables.inv_table.append(j)
-					continue
+    # Populate the inv table.
+    # I am being crass here.  I'm assuming the Cayley table is good before I
+    # start.  The good news is that the is-group functions don't use the inv
+    # table.
+    G = []
+    for i in range(0, n):
+        G.append(spec_t(i))
+    [found, e] = sackgrp.find_id(G)
+    if (found):
+        for i in range(0, n):
+            x = G[i]
+            for j in range(0, n):
+                y = G[j]
+                z = x*y
+                if (z.code == e.code):
+                    spec_tables.inv_table.append(j)
+                    continue
 
 
 # ================================================================
 import unittest
 if __name__ == '__main__':
 
-	class test_cases(unittest.TestCase):
-		def test_name_to_index(self):
-			pass # to be implemented
+    class test_cases(unittest.TestCase):
+        def test_name_to_index(self):
+            pass # to be implemented
 
-		def test_name_to_index_or_die(self):
-			pass # to be implemented
+        def test_name_to_index_or_die(self):
+            pass # to be implemented
 
-		def test___init__(self):
-			pass # to be implemented
+        def test___init__(self):
+            pass # to be implemented
 
-		def test___mul__(self):
-			pass # to be implemented
+        def test___mul__(self):
+            pass # to be implemented
 
-		def test___eq__(self):
-			pass # to be implemented
+        def test___eq__(self):
+            pass # to be implemented
 
-		def test___ne__(self):
-			pass # to be implemented
+        def test___ne__(self):
+            pass # to be implemented
 
-		def test___lt__(self):
-			pass # to be implemented
+        def test___lt__(self):
+            pass # to be implemented
 
-		def test___le__(self):
-			pass # to be implemented
+        def test___le__(self):
+            pass # to be implemented
 
-		def test___gt__(self):
-			pass # to be implemented
+        def test___gt__(self):
+            pass # to be implemented
 
-		def test___ge__(self):
-			pass # to be implemented
+        def test___ge__(self):
+            pass # to be implemented
 
-		def test_inv(self):
-			pass # to be implemented
+        def test_inv(self):
+            pass # to be implemented
 
-		def test_scan(self):
-			pass # to be implemented
+        def test_scan(self):
+            pass # to be implemented
 
-		def test___str__(self):
-			pass # to be implemented
+        def test___str__(self):
+            pass # to be implemented
 
-		def test___repr__(self):
-			pass # to be implemented
+        def test___repr__(self):
+            pass # to be implemented
 
-		def test_params_from_string(self):
-			pass # to be implemented
+        def test_params_from_string(self):
+            pass # to be implemented
 
-		def test_from_string(self):
-			pass # to be implemented
+        def test_from_string(self):
+            pass # to be implemented
 
-		def test_install_table(self):
-			pass # to be implemented
+        def test_install_table(self):
+            pass # to be implemented
 
-	# ----------------------------------------------------------------
-	unittest.main()
+    # ----------------------------------------------------------------
+    unittest.main()

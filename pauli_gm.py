@@ -13,9 +13,9 @@ import pauli_tm
 import sackgrp
 
 def get_elements_str(params_string):
-	elts = []
-	elts.append(pauli_tm.from_string("sx",""))
-	elts.append(pauli_tm.from_string("sy",""))
-	elts.append(pauli_tm.from_string("sz",""))
-	sackgrp.close_group(elts)
-	return elts
+    elts = []
+    elts.append(pauli_tm.from_string("sx",""))
+    elts.append(pauli_tm.from_string("sy",""))
+    elts.append(pauli_tm.from_string("sz",""))
+    sackgrp.close_group(elts)
+    return elts

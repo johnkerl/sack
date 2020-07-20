@@ -28,75 +28,75 @@ import copy
 
 class cl2m_t:
 
-	def __init__(self, sign, bits, n):
-		self.sign = sign
-		self.bits = bits & ((1 << n) - 1)
-		self.n    = n
+    def __init__(self, sign, bits, n):
+        self.sign = sign
+        self.bits = bits & ((1 << n) - 1)
+        self.n    = n
 
-	def __mul__(a,b):
-		c = cl2m_t(a.sign * b.sign, a.bits ^ b.bits, a.n)
-		for j in range(0, b.n):
-			if ((b.bits >> j) & 1):
-				# Count the number of times to move this element of b left
-				# past elements of a.
-				for i in range(j, a.n):
-					if ((a.bits >> i) & 1):
-						c.sign *= -1
-		return c
+    def __mul__(a,b):
+        c = cl2m_t(a.sign * b.sign, a.bits ^ b.bits, a.n)
+        for j in range(0, b.n):
+            if ((b.bits >> j) & 1):
+                # Count the number of times to move this element of b left
+                # past elements of a.
+                for i in range(j, a.n):
+                    if ((a.bits >> i) & 1):
+                        c.sign *= -1
+        return c
 
-	def __eq__(a,b):
-		return (a.sign == b.sign and a.bits == b.bits and a.n == b.n)
+    def __eq__(a,b):
+        return (a.sign == b.sign and a.bits == b.bits and a.n == b.n)
 
-	def __ne__(a,b):
-		return not (a == b)
+    def __ne__(a,b):
+        return not (a == b)
 
-	def __lt__(a,b):
-		if (a.bits < b.bits):
-			return 1
-		return a.sign > b.sign
-	def __le__(a,b):
-		if (a.bits <= b.bits):
-			return 1
-		return a.sign >= b.sign
-	def __gt__(a,b):
-		if (a.bits > b.bits):
-			return 1
-		return a.sign < b.sign
-	def __ge__(a,b):
-		if (a.bits >= b.bits):
-			return 1
-		return a.sign <= b.sign
+    def __lt__(a,b):
+        if (a.bits < b.bits):
+            return 1
+        return a.sign > b.sign
+    def __le__(a,b):
+        if (a.bits <= b.bits):
+            return 1
+        return a.sign >= b.sign
+    def __gt__(a,b):
+        if (a.bits > b.bits):
+            return 1
+        return a.sign < b.sign
+    def __ge__(a,b):
+        if (a.bits >= b.bits):
+            return 1
+        return a.sign <= b.sign
 
-	def inv(a):
-		c = copy.copy(a) # stub -- NOT right.
-		return c
+    def inv(a):
+        c = copy.copy(a) # stub -- NOT right.
+        return c
 
-	def scan(self, string):
-		if (1):
-			self.__init__(1, 0, 4) # stub
-		else:
-			raise IOError
+    def scan(self, string):
+        if (1):
+            self.__init__(1, 0, 4) # stub
+        else:
+            raise IOError
 
-	def __str__(self):
-		rv = "+"
-		if (self.sign < 0):
-			rv = "-"
-		for i in range(0, self.n):
-			rv += str((self.bits >> i) & 1)
-		return rv
+    def __str__(self):
+        rv = "+"
+        if (self.sign < 0):
+            rv = "-"
+        for i in range(0, self.n):
+            rv += str((self.bits >> i) & 1)
+        return rv
 
-	def __repr__(self):
-		return self.__str__()
+    def __repr__(self):
+        return self.__str__()
 
 def params_from_string(params_string):
-	n = int(params_string)
-	return n
+    n = int(params_string)
+    return n
 
 def from_string(value_string, params_string):
-	n = params_from_string(params_string)
-	obj = cl2m_t(1, 0, n)
-	obj.scan(value_string)
-	return obj
+    n = params_from_string(params_string)
+    obj = cl2m_t(1, 0, n)
+    obj.scan(value_string)
+    return obj
 
 ## xxx temp
 #a = cl2m_t(1, 0x66, 8)
@@ -108,48 +108,48 @@ def from_string(value_string, params_string):
 import unittest
 if __name__ == '__main__':
 
-	class test_cases(unittest.TestCase):
-		def test___init__(self):
-			pass # to be implemented
+    class test_cases(unittest.TestCase):
+        def test___init__(self):
+            pass # to be implemented
 
-		def test___mul__(self):
-			pass # to be implemented
+        def test___mul__(self):
+            pass # to be implemented
 
-		def test___eq__(self):
-			pass # to be implemented
+        def test___eq__(self):
+            pass # to be implemented
 
-		def test___ne__(self):
-			pass # to be implemented
+        def test___ne__(self):
+            pass # to be implemented
 
-		def test___lt__(self):
-			pass # to be implemented
+        def test___lt__(self):
+            pass # to be implemented
 
-		def test___le__(self):
-			pass # to be implemented
+        def test___le__(self):
+            pass # to be implemented
 
-		def test___gt__(self):
-			pass # to be implemented
+        def test___gt__(self):
+            pass # to be implemented
 
-		def test___ge__(self):
-			pass # to be implemented
+        def test___ge__(self):
+            pass # to be implemented
 
-		def test_inv(self):
-			pass # to be implemented
+        def test_inv(self):
+            pass # to be implemented
 
-		def test_scan(self):
-			pass # to be implemented
+        def test_scan(self):
+            pass # to be implemented
 
-		def test___str__(self):
-			pass # to be implemented
+        def test___str__(self):
+            pass # to be implemented
 
-		def test___repr__(self):
-			pass # to be implemented
+        def test___repr__(self):
+            pass # to be implemented
 
-		def test_params_from_string(self):
-			pass # to be implemented
+        def test_params_from_string(self):
+            pass # to be implemented
 
-		def test_from_string(self):
-			pass # to be implemented
+        def test_from_string(self):
+            pass # to be implemented
 
-	# ----------------------------------------------------------------
-	unittest.main()
+    # ----------------------------------------------------------------
+    unittest.main()

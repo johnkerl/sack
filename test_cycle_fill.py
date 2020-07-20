@@ -30,34 +30,34 @@ print
 
 print "random pmtcs:"
 for i in range(0, 10):
-	pi = pmtc_tm.rand_pmtc(4)
-	print pi
+    pi = pmtc_tm.rand_pmtc(4)
+    print pi
 print
 
 print "random pmtis:"
 for i in range(0, 10):
-	pi = pmti_tm.rand_pmti(4)
-	print pi
+    pi = pmti_tm.rand_pmti(4)
+    print pi
 print
 
 
 print "random pmtcs:"
 for i in range(0, 10):
-	pi = pmtc_tm.rand_pmtc(20)
-	ct = pi.cycle_type()
-	print pi, ct
+    pi = pmtc_tm.rand_pmtc(20)
+    ct = pi.cycle_type()
+    print pi, ct
 print
 
 print "random pmtis:"
 for i in range(0, 10):
-	pi = pmti_tm.rand_pmti(20)
-	ct = pi.cycle_type()
-	print pi, ct
+    pi = pmti_tm.rand_pmti(20)
+    ct = pi.cycle_type()
+    print pi, ct
 print
 
 print "random pmtcs:"
 for i in range(0, 10):
-	pi = pmtc_tm.rand_pmtc(100)
-	ct = pi.cycle_type()
-	print ct
+    pi = pmtc_tm.rand_pmtc(100)
+    ct = pi.cycle_type()
+    print ct
 print

@@ -37,7 +37,7 @@ E = P*Q
 
 print "S3:"
 for g in S3:
-	print g
+    print g
 print ""
 
 print "P:", P
@@ -48,35 +48,35 @@ print
 
 #print "AEs:"
 #for g in S3:
-#	A = cgpalg_tm.cgpalg_t([[1, g]])
-#	AE = A * E
-#	print AE
+#   A = cgpalg_tm.cgpalg_t([[1, g]])
+#   AE = A * E
+#   print AE
 #print
 
 print "AEs:"
 for g in S3:
-	A = cgpalg_tm.cgpalg_t([[1, g]])
-	AE = A * E
-	#print g, "--", AE.to_coef_array(S3)
-	print AE.to_coef_array(S3)
+    A = cgpalg_tm.cgpalg_t([[1, g]])
+    AE = A * E
+    #print g, "--", AE.to_coef_array(S3)
+    print AE.to_coef_array(S3)
 print
 # Got rank 2
 
 print "AE invs:"
 for g in S3:
-	A = cgpalg_tm.cgpalg_t([[1, g]])
-	AE = A * E
-	#print g, "--", AE.to_coef_array(S3)
-	print AE.inv()
+    A = cgpalg_tm.cgpalg_t([[1, g]])
+    AE = A * E
+    #print g, "--", AE.to_coef_array(S3)
+    print AE.inv()
 print
 # Got rank 2
 
 print "AE inv checks:"
 for g in S3:
-	A = cgpalg_tm.cgpalg_t([[1, g]])
-	AE = A * E
-	#print g, "--", AE.to_coef_array(S3)
-	print AE.inv() * AE
+    A = cgpalg_tm.cgpalg_t([[1, g]])
+    AE = A * E
+    #print g, "--", AE.to_coef_array(S3)
+    print AE.inv() * AE
 print
 # Got rank 2
 
@@ -107,9 +107,9 @@ print
 
 print "AEs:"
 for g in S4:
-	A = cgpalg_tm.cgpalg_t([[1, g]])
-	AE = A * E
-	print AE.to_coef_array(S4)
+    A = cgpalg_tm.cgpalg_t([[1, g]])
+    AE = A * E
+    print AE.to_coef_array(S4)
 print
 # Got rank 3
 

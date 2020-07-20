@@ -45,32 +45,32 @@ import sackint
 #   1,3 -> 3,4
 
 def get_elements_str(params_string):
-	mod_array = modmul_tm.params_from_string(params_string)
-	num_moduli = len(mod_array)
+    mod_array = modmul_tm.params_from_string(params_string)
+    num_moduli = len(mod_array)
 
-	phi_array = []
-	group_size = 1
-	for m in mod_array:
-		phi = sackint.eulerphi(m)
-		phi_array.append(phi)
-		group_size *= phi
+    phi_array = []
+    group_size = 1
+    for m in mod_array:
+        phi = sackint.eulerphi(m)
+        phi_array.append(phi)
+        group_size *= phi
 
-	indices = modadd_gm.get_elements_str_aux(phi_array)
+    indices = modadd_gm.get_elements_str_aux(phi_array)
 
-	phi_groups = []
-	for m in mod_array:
-		phi_group = []
-		for k in range (0, m):
-			if (sackint.gcd(k, m) == 1):
-				phi_group.append(k)
-		phi_groups.append(phi_group)
+    phi_groups = []
+    for m in mod_array:
+        phi_group = []
+        for k in range (0, m):
+            if (sackint.gcd(k, m) == 1):
+                phi_group.append(k)
+        phi_groups.append(phi_group)
 
-	elts = []
-	for index in indices:
-		resarray = []
-		for i in range(0, len(index.residues)):
-			j = index.residues[i]
-			resarray.append(phi_groups[i][j])
-		elt = modmul_tm.modmul_t(resarray, mod_array)
-		elts.append(elt)
-	return elts
+    elts = []
+    for index in indices:
+        resarray = []
+        for i in range(0, len(index.residues)):
+            j = index.residues[i]
+            resarray.append(phi_groups[i][j])
+        elt = modmul_tm.modmul_t(resarray, mod_array)
+        elts.append(elt)
+    return elts

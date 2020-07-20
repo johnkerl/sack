@@ -12,10 +12,10 @@
 import dih_tm
 
 def get_elements_str(params_string):
-	n = dih_tm.params_from_string(params_string)
-	elts = []
-	for i in range(0, n):
-		for j in range(0, 2):
-			elt = dih_tm.dih_t(i, j, n)
-			elts.append(elt)
-	return elts
+    n = dih_tm.params_from_string(params_string)
+    elts = []
+    for i in range(0, n):
+        for j in range(0, 2):
+            elt = dih_tm.dih_t(i, j, n)
+            elts.append(elt)
+    return elts

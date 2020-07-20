@@ -13,8 +13,8 @@
 import v4_tm
 
 def get_elements_str(params_string):
-	not_used = v4_tm.params_from_string(params_string)
-	elts = range(0, 4)
-	for i in range(0, 4):
-		elts[i] = v4_tm.v4_t(i)
-	return elts
+    not_used = v4_tm.params_from_string(params_string)
+    elts = range(0, 4)
+    for i in range(0, 4):
+        elts[i] = v4_tm.v4_t(i)
+    return elts

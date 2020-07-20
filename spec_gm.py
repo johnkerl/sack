@@ -18,38 +18,38 @@ import sys
 # different user-specified groups without a redesign.
 
 def get_elements_str(params_string):
-	file_name = params_string
-	cayley_table_with_names = []
+    file_name = params_string
+    cayley_table_with_names = []
 
-	if (file_name == "-"):
-		file_handle = sys.stdin
-	else:
-		try:
-			file_handle = open(file_name, 'r')
-		except:
-			print "Couldn't open \"" + file_name + "\" for read."
-			sys.exit(1)
+    if (file_name == "-"):
+        file_handle = sys.stdin
+    else:
+        try:
+            file_handle = open(file_name, 'r')
+        except:
+            print "Couldn't open \"" + file_name + "\" for read."
+            sys.exit(1)
 
-	for line in file_handle:
+    for line in file_handle:
 
-		# Chomp trailing newline, if any.
-		if (line[-1] == '\n'):
-			line = line[0:-1]
+        # Chomp trailing newline, if any.
+        if (line[-1] == '\n'):
+            line = line[0:-1]
 
-		# Strip leading and trailing whitespace.
-		line = re.sub(r"^\s+", r"", line)
-		line = re.sub(r"\s+$", r"", line)
+        # Strip leading and trailing whitespace.
+        line = re.sub(r"^\s+", r"", line)
+        line = re.sub(r"\s+$", r"", line)
 
-		row_names = re.split('\s+', line)
-		cayley_table_with_names.append(copy.copy(row_names))
+        row_names = re.split('\s+', line)
+        cayley_table_with_names.append(copy.copy(row_names))
 
-	if (file_name != "-"):
-		file_handle.close()
+    if (file_name != "-"):
+        file_handle.close()
 
-	spec_tm.install_table(cayley_table_with_names)
+    spec_tm.install_table(cayley_table_with_names)
 
-	n = len(cayley_table_with_names)
-	elts = range(0, n)
-	for i in range(0, n):
-		elts[i] = spec_tm.spec_t(i)
-	return elts
+    n = len(cayley_table_with_names)
+    elts = range(0, n)
+    for i in range(0, n):
+        elts[i] = spec_tm.spec_t(i)
+    return elts

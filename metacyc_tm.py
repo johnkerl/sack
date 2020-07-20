@@ -94,132 +94,132 @@ import sackint
 # Second component of return value is t.
 # First  compoment of return value is a flag indicating whether t was found.
 def find_t(p, q):
-	for t in range(2, p):
-		if (sackint.intmodexp(t, q, p) == 1):
-			return [1, t]
-	return [0, 0]
+    for t in range(2, p):
+        if (sackint.intmodexp(t, q, p) == 1):
+            return [1, t]
+    return [0, 0]
 
 # ================================================================
 class metacyc_t:
 
-	def __init__(self, i, j, p, q, t):
+    def __init__(self, i, j, p, q, t):
 
-		tq = sackint.intmodexp(t, q, p)
-		if ((tq % p) != 1):
-			print "metacyc:  t^q must be 1 mod p"
-			print "Got p =", p, "q =", q, "t =", t
-			raise RuntimeError
+        tq = sackint.intmodexp(t, q, p)
+        if ((tq % p) != 1):
+            print "metacyc:  t^q must be 1 mod p"
+            print "Got p =", p, "q =", q, "t =", t
+            raise RuntimeError
 
-		# xxx jrk 2006-11-28:  allow trivial homomorphisms.
-		#if ((t % p) == 1):
-		#	print "metacyc:  t must not be 1 mod p"
-		#	print "Got p =", p, "q =", q, "t =", t
-		#	raise RuntimeError
+        # xxx jrk 2006-11-28:  allow trivial homomorphisms.
+        #if ((t % p) == 1):
+        #   print "metacyc:  t must not be 1 mod p"
+        #   print "Got p =", p, "q =", q, "t =", t
+        #   raise RuntimeError
 
-		self.i = i % p
-		self.j = j % q
-		self.p = p
-		self.q = q
-		self.t = t
+        self.i = i % p
+        self.j = j % q
+        self.p = p
+        self.q = q
+        self.t = t
 
-	def __eq__(a,b):
-		return ((a.i == b.i) and (a.j == b.j))
+    def __eq__(a,b):
+        return ((a.i == b.i) and (a.j == b.j))
 
-	def __ne__(a,b):
-		return not (a == b)
+    def __ne__(a,b):
+        return not (a == b)
 
-	def __mul__(a,b):
-		if ((a.p != b.p) or (a.q != b.q) or (a.t != b.t)):
-			print "Parameter mismatch in metacyc mul"
-			raise RuntimeError
-		ci = (a.i + b.i * sackint.intmodexp(a.t, a.j, a.p)) % a.p
-		cj = (a.j + b.j) % a.q
-		c = metacyc_t(ci, cj, a.p, a.q, a.t)
-		return c
+    def __mul__(a,b):
+        if ((a.p != b.p) or (a.q != b.q) or (a.t != b.t)):
+            print "Parameter mismatch in metacyc mul"
+            raise RuntimeError
+        ci = (a.i + b.i * sackint.intmodexp(a.t, a.j, a.p)) % a.p
+        cj = (a.j + b.j) % a.q
+        c = metacyc_t(ci, cj, a.p, a.q, a.t)
+        return c
 
-	def inv(a):
-		ci = -a.i * sackint.intmodexp(a.t, -a.j, a.p)
-		cj = -a.j
-		c = metacyc_t(ci, cj, a.p, a.q, a.t)
-		return c
+    def inv(a):
+        ci = -a.i * sackint.intmodexp(a.t, -a.j, a.p)
+        cj = -a.j
+        c = metacyc_t(ci, cj, a.p, a.q, a.t)
+        return c
 
-	def scan(self, string, argp, argq, argt):
-		groups = re.match(r"^(\d)+,(\d+)$", string).groups();
-		if len(groups) != 2:
-			raise IOError
-		self.__init__(int(groups[0]), int(groups[1]), argp, argq, argt)
+    def scan(self, string, argp, argq, argt):
+        groups = re.match(r"^(\d)+,(\d+)$", string).groups();
+        if len(groups) != 2:
+            raise IOError
+        self.__init__(int(groups[0]), int(groups[1]), argp, argq, argt)
 
-	def __str__(self):
-		return str(self.i) + "," + str(self.j)
+    def __str__(self):
+        return str(self.i) + "," + str(self.j)
 
-	def __repr__(self):
-		return self.__str__()
+    def __repr__(self):
+        return self.__str__()
 
 def params_from_string(params_string):
-	pqt = re.split(',', params_string)
+    pqt = re.split(',', params_string)
 
-	if (len(pqt) == 3):
-		p = int(pqt[0])
-		q = int(pqt[1])
-		t = int(pqt[2])
-	elif (len(pqt) == 2):
-		p = int(pqt[0])
-		q = int(pqt[1])
-		[got_it, t] = find_t(p, q)
-		if (not got_it):
-			print "metacyc_t:  No t found for p =", p, "q =", q
-			print "Got: ", params_string
-			raise IOError
-	else:
-		print "metacyc_tm.from_string:  expected parameters p,q or p,q,t."
-		print "Got: ", params_string
-		raise IOError
-	return [p, q, t]
+    if (len(pqt) == 3):
+        p = int(pqt[0])
+        q = int(pqt[1])
+        t = int(pqt[2])
+    elif (len(pqt) == 2):
+        p = int(pqt[0])
+        q = int(pqt[1])
+        [got_it, t] = find_t(p, q)
+        if (not got_it):
+            print "metacyc_t:  No t found for p =", p, "q =", q
+            print "Got: ", params_string
+            raise IOError
+    else:
+        print "metacyc_tm.from_string:  expected parameters p,q or p,q,t."
+        print "Got: ", params_string
+        raise IOError
+    return [p, q, t]
 
 def from_string(value_string, params_string):
-	[p, q, t] = params_from_string(params_string)
-	obj = metacyc_t(0, 0, p, q, t)
-	obj.scan(value_string, p, q, t)
-	return obj
+    [p, q, t] = params_from_string(params_string)
+    obj = metacyc_t(0, 0, p, q, t)
+    obj.scan(value_string, p, q, t)
+    return obj
 
 
 # ================================================================
 import unittest
 if __name__ == '__main__':
 
-	class test_cases(unittest.TestCase):
-		def test_find_t(self):
-			pass # to be implemented
+    class test_cases(unittest.TestCase):
+        def test_find_t(self):
+            pass # to be implemented
 
-		def test___init__(self):
-			pass # to be implemented
+        def test___init__(self):
+            pass # to be implemented
 
-		def test___eq__(self):
-			pass # to be implemented
+        def test___eq__(self):
+            pass # to be implemented
 
-		def test___ne__(self):
-			pass # to be implemented
+        def test___ne__(self):
+            pass # to be implemented
 
-		def test___mul__(self):
-			pass # to be implemented
+        def test___mul__(self):
+            pass # to be implemented
 
-		def test_inv(self):
-			pass # to be implemented
+        def test_inv(self):
+            pass # to be implemented
 
-		def test_scan(self):
-			pass # to be implemented
+        def test_scan(self):
+            pass # to be implemented
 
-		def test___str__(self):
-			pass # to be implemented
+        def test___str__(self):
+            pass # to be implemented
 
-		def test___repr__(self):
-			pass # to be implemented
+        def test___repr__(self):
+            pass # to be implemented
 
-		def test_params_from_string(self):
-			pass # to be implemented
+        def test_params_from_string(self):
+            pass # to be implemented
 
-		def test_from_string(self):
-			pass # to be implemented
+        def test_from_string(self):
+            pass # to be implemented
 
-	# ----------------------------------------------------------------
-	unittest.main()
+    # ----------------------------------------------------------------
+    unittest.main()

@@ -12,10 +12,10 @@
 import metacyc_tm
 
 def get_elements_str(params_string):
-	[p, q, t] = metacyc_tm.params_from_string(params_string)
-	pq = p * q
-	elts = []
-	for i in range(0, p):
-		for j in range(0, q):
-			elts.append(metacyc_tm.metacyc_t(i, j, p, q, t))
-	return elts
+    [p, q, t] = metacyc_tm.params_from_string(params_string)
+    pq = p * q
+    elts = []
+    for i in range(0, p):
+        for j in range(0, q):
+            elts.append(metacyc_tm.metacyc_t(i, j, p, q, t))
+    return elts

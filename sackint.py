@@ -9,59 +9,59 @@
 
 # ----------------------------------------------------------------
 def gcd(a, b):
-	r = 0
-	if (a == 0):
-		return b
-	if (b == 0):
-		return a
+    r = 0
+    if (a == 0):
+        return b
+    if (b == 0):
+        return a
 
-	while (1):
-		r = a % b
-		if (r == 0):
-			break
-		a = b
-		b = r
-	if (b < 0):
-		b = -b
-	return b
+    while (1):
+        r = a % b
+        if (r == 0):
+            break
+        a = b
+        b = r
+    if (b < 0):
+        b = -b
+    return b
 
 # ----------------------------------------------------------------
 # Blankinship's algorithm
 
 def extgcd(a, b):
 
-	# Initialize
-	mprime = 1
-	n      = 1
-	m      = 0
-	nprime = 0
-	c      = a
-	d      = b
+    # Initialize
+    mprime = 1
+    n      = 1
+    m      = 0
+    nprime = 0
+    c      = a
+    d      = b
 
-	while (1):
-		# Divide
-		q = c / d
-		r = c % d
-		# Note:  now c = qd + r and 0 <= r < d
+    while (1):
+        # Divide
+        q = c / d
+        r = c % d
+        # Note:  now c = qd + r and 0 <= r < d
 
-		# Remainder zero?
-		if (r == 0):
-			break
+        # Remainder zero?
+        if (r == 0):
+            break
 
-		# Recycle
-		c = d
-		d = r
+        # Recycle
+        c = d
+        d = r
 
-		t      = mprime
-		mprime = m
-		qm     = q * m
-		m      = t - qm
+        t      = mprime
+        mprime = m
+        qm     = q * m
+        m      = t - qm
 
-		t      = nprime
-		nprime = n
-		qn     = q * n
-		n      = t - qn
-	return [d, m, n]
+        t      = nprime
+        nprime = n
+        qn     = q * n
+        n      = t - qn
+    return [d, m, n]
 
 # ----------------------------------------------------------------
 # This function should be invoked with only one argument.
@@ -69,75 +69,75 @@ def extgcd(a, b):
 # See Lutz & Ascher, 2nd. ed., p 241.
 
 def eulerphi(n, cached_n_and_phi=[2,1]):
-	if (n == cached_n_and_phi[0]):
-		# Cache hit
-		return cached_n_and_phi[1]
+    if (n == cached_n_and_phi[0]):
+        # Cache hit
+        return cached_n_and_phi[1]
 
-	phi = 0
-	for i in range (1, n):
-		if (gcd(n, i) == 1):
-			phi += 1
-	return phi
+    phi = 0
+    for i in range (1, n):
+        if (gcd(n, i) == 1):
+            phi += 1
+    return phi
 
-	cached_n_and_phi[0] = n
-	cached_n_and_phi[1] = phi
-	return phi
+    cached_n_and_phi[0] = n
+    cached_n_and_phi[1] = phi
+    return phi
 
 # ----------------------------------------------------------------
 # Binary exponentiation
 
 def intexp(x, e):
-	xp = x
-	rv = 1
+    xp = x
+    rv = 1
 
-	if (e < 0):
-		print "intexp:  negative exponent", e, "disallowed."
-		raise RuntimeError
+    if (e < 0):
+        print "intexp:  negative exponent", e, "disallowed."
+        raise RuntimeError
 
-	while (e != 0):
-		if (e & 1):
-			rv = (rv * xp)
-		e = e >> 1
-		xp = (xp * xp)
-	return rv
+    while (e != 0):
+        if (e & 1):
+            rv = (rv * xp)
+        e = e >> 1
+        xp = (xp * xp)
+    return rv
 
 # ----------------------------------------------------------------
 # Binary exponentiation
 
 def intmodexp(x, e, m):
-	xp = x
-	rv = 1
+    xp = x
+    rv = 1
 
-	if (e < 0):
-		e = -e
-		x = intmodrecip(x, m)
+    if (e < 0):
+        e = -e
+        x = intmodrecip(x, m)
 
-	while (e != 0):
-		if (e & 1):
-			rv = (rv * xp) % m
-		e = e >> 1
-		xp = (xp * xp) % m
-	return rv
+    while (e != 0):
+        if (e & 1):
+            rv = (rv * xp) % m
+        e = e >> 1
+        xp = (xp * xp) % m
+    return rv
 
 # ----------------------------------------------------------------
 def intmodrecip(x, m):
-	if (gcd(x, m) != 1):
-		print "intmodrecip:  impossible inverse", x, "mod", m
-		raise RuntimeError
-	phi = eulerphi(m)
-	return intmodexp(x, phi-1, m)
+    if (gcd(x, m) != 1):
+        print "intmodrecip:  impossible inverse", x, "mod", m
+        raise RuntimeError
+    phi = eulerphi(m)
+    return intmodexp(x, phi-1, m)
 
 # ----------------------------------------------------------------
 def factorial(n):
-	if (n < 0):
-		print "factorial: negative input disallowed."
-		raise RuntimeError
-	if (n < 2):
-		return 1
-	rv = 1
-	for k in range(2, n+1):
-		rv *= k
-	return rv
+    if (n < 0):
+        print "factorial: negative input disallowed."
+        raise RuntimeError
+    if (n < 2):
+        return 1
+    rv = 1
+    for k in range(2, n+1):
+        rv *= k
+    return rv
 
 # ----------------------------------------------------------------
 # How to compute P(n) = number of partitions of n.  Examples for n = 1 to 5:
@@ -157,51 +157,51 @@ def factorial(n):
 # than or equal to m.
 
 def num_ptnsm(n, m):
-	if (n <  0): return 0
-	if (n <= 1): return 1
-	if (m == 1): return 1
-	sum = 0
-	for k in range(1, m+1):
-		if (n-k >= 0):
-			sum += num_ptnsm(n-k, k)
-	return sum
+    if (n <  0): return 0
+    if (n <= 1): return 1
+    if (m == 1): return 1
+    sum = 0
+    for k in range(1, m+1):
+        if (n-k >= 0):
+            sum += num_ptnsm(n-k, k)
+    return sum
 
 # ----------------------------------------------------------------
 def num_ptns(n):
-	return num_ptnsm(n, n)
+    return num_ptnsm(n, n)
 
 # ----------------------------------------------------------------
 def ptnsm(n, m):
-	rv = []
-	if (n <  0): return 0
-	if (n == 0): return [[]]
-	if (n == 1): return [[1]]
-	if (m == 1): return [[1] * n]
-	sum = 0
-	for k in range(1, m+1):
-		if (n-k >= 0):
-			tails = ptnsm(n-k, k)
-			for tail in tails:
-				rv.append([k] + tail)
-	return rv
+    rv = []
+    if (n <  0): return 0
+    if (n == 0): return [[]]
+    if (n == 1): return [[1]]
+    if (m == 1): return [[1] * n]
+    sum = 0
+    for k in range(1, m+1):
+        if (n-k >= 0):
+            tails = ptnsm(n-k, k)
+            for tail in tails:
+                rv.append([k] + tail)
+    return rv
 
 # ----------------------------------------------------------------
 def ptns(n):
-	return ptnsm(n, n)
+    return ptnsm(n, n)
 
 #for n in range(1, 21):
-#	a = onum_ptns(n)
-#	b =  num_ptns(n)
-#	print "%2d %2d %2d" % (n, a, b)
+#   a = onum_ptns(n)
+#   b =  num_ptns(n)
+#   print "%2d %2d %2d" % (n, a, b)
 
 #for n in range(1, 5+1):
-#	for m in range(1, n+1):
-#		p = num_ptnsm(n, m)
-#		print n, m, p
-#	print
+#   for m in range(1, n+1):
+#       p = num_ptnsm(n, m)
+#       print n, m, p
+#   print
 
 #for n in range(1, 7+1):
-#	for m in range(1, n+1):
-#		X = ptnsm(n, m)
-#		print n, m, len(X), X
-#	print
+#   for m in range(1, n+1):
+#       X = ptnsm(n, m)
+#       print n, m, len(X), X
+#   print

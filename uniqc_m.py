@@ -18,59 +18,59 @@
 # ================================================================
 
 def uniqc(list):
-	rv = []
-	n = len(list)
+    rv = []
+    n = len(list)
 
-	if (n == 0):
-		return []
+    if (n == 0):
+        return []
 
-	curri = 0
-	nexti = 1
-	head  = list[curri]
-	count = 1
+    curri = 0
+    nexti = 1
+    head  = list[curri]
+    count = 1
 
-	while (curri < n):
-		if (nexti == n): # Last element in the list
-			if (list[curri] == head):
-				rv.append([head, count])
-			else:
-				rv.append([list[curri], 1])
-		elif (list[curri] == list[nexti]):
-			count += 1
-		else:
-			rv.append([head, count])
-			head = list[nexti]
-			count = 1
-		curri += 1
-		nexti += 1
+    while (curri < n):
+        if (nexti == n): # Last element in the list
+            if (list[curri] == head):
+                rv.append([head, count])
+            else:
+                rv.append([list[curri], 1])
+        elif (list[curri] == list[nexti]):
+            count += 1
+        else:
+            rv.append([head, count])
+            head = list[nexti]
+            count = 1
+        curri += 1
+        nexti += 1
 
-	return rv
+    return rv
 
 # ----------------------------------------------------------------
 # Test cases:
 
 #def test1(list):
-#	#print list
-#	#print uniqc(list)
-#	#print
+#   #print list
+#   #print uniqc(list)
+#   #print
 #
-#	# Pipe the output to, say, expand -20.
-#	print list, "\t", uniqc(list)
+#   # Pipe the output to, say, expand -20.
+#   print list, "\t", uniqc(list)
 #
 #def test_uniqc():
-#	test1([])
-#	test1([8])
-#	test1([8, 8])
-#	test1([8, 9])
-#	test1([9, 8])
-#	test1([9, 9])
-#	test1([8, 8, 8])
-#	test1([8, 8, 9])
-#	test1([8, 9, 8])
-#	test1([8, 9, 9])
-#	test1([9, 8, 8])
-#	test1([9, 8, 9])
-#	test1([9, 9, 8])
-#	test1([9, 9, 9])
+#   test1([])
+#   test1([8])
+#   test1([8, 8])
+#   test1([8, 9])
+#   test1([9, 8])
+#   test1([9, 9])
+#   test1([8, 8, 8])
+#   test1([8, 8, 9])
+#   test1([8, 9, 8])
+#   test1([8, 9, 9])
+#   test1([9, 8, 8])
+#   test1([9, 8, 9])
+#   test1([9, 9, 8])
+#   test1([9, 9, 9])
 #
 #test_uniqc()

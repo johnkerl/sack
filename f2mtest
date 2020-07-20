@@ -10,14 +10,14 @@ m = f2poly_t(0x13)
 e = 3
 argc = len(sys.argv)
 if (argc == 4):
-	m  = f2poly_from_string(sys.argv[1])
-	ar = f2poly_from_string(sys.argv[2])
-	br = f2poly_from_string(sys.argv[3])
+    m  = f2poly_from_string(sys.argv[1])
+    ar = f2poly_from_string(sys.argv[2])
+    br = f2poly_from_string(sys.argv[3])
 if (argc == 5):
-	m  = f2poly_from_string(sys.argv[1])
-	ar = f2poly_from_string(sys.argv[2])
-	br = f2poly_from_string(sys.argv[3])
-	e  = int(sys.argv[4])
+    m  = f2poly_from_string(sys.argv[1])
+    ar = f2poly_from_string(sys.argv[2])
+    br = f2poly_from_string(sys.argv[3])
+    e  = int(sys.argv[4])
 a = f2polymod_t(ar, m)
 b = f2polymod_t(br, m)
 print "a    =", a

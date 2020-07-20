@@ -11,10 +11,10 @@
 
 import T_tm
 
-def get_elements_str(params_string):
-	elts = []
-	for i in range(0, 3):
-		for j in range(0, 4):
-			elt = T_tm.T_t(i, j)
-			elts.append(elt)
-	return elts
+def get_elements_str(params_string: str):
+    elts = []
+    for i in range(0, 3):
+        for j in range(0, 4):
+            elt = T_tm.T_t(i, j)
+            elts.append(elt)
+    return elts
