@@ -15,7 +15,7 @@ import copy
 # ----------------------------------------------------------------
 # 559B final problem 1a.
 
-print "-" * 64
+print(("-" * 64))
 
 #S3  = snc_gm.get_elements(3)
 
@@ -35,16 +35,16 @@ P = cgpalg_tm.cgpalg_t([[1,s1], [ 1,s12]])
 Q = cgpalg_tm.cgpalg_t([[1,s1], [-1,s13]])
 E = P*Q
 
-print "S3:"
+print("S3:")
 for g in S3:
-    print g
-print ""
+    print(g)
+print("")
 
-print "P:", P
-print "Q:", Q
-print "E:", E
-print "E*E", E*E
-print
+print(("P:", P))
+print(("Q:", Q))
+print(("E:", E))
+print(("E*E", E*E))
+print()
 
 #print "AEs:"
 #for g in S3:
@@ -53,37 +53,37 @@ print
 #   print AE
 #print
 
-print "AEs:"
+print("AEs:")
 for g in S3:
     A = cgpalg_tm.cgpalg_t([[1, g]])
     AE = A * E
     #print g, "--", AE.to_coef_array(S3)
-    print AE.to_coef_array(S3)
-print
+    print((AE.to_coef_array(S3)))
+print()
 # Got rank 2
 
-print "AE invs:"
+print("AE invs:")
 for g in S3:
     A = cgpalg_tm.cgpalg_t([[1, g]])
     AE = A * E
     #print g, "--", AE.to_coef_array(S3)
-    print AE.inv()
-print
+    print((AE.inv()))
+print()
 # Got rank 2
 
-print "AE inv checks:"
+print("AE inv checks:")
 for g in S3:
     A = cgpalg_tm.cgpalg_t([[1, g]])
     AE = A * E
     #print g, "--", AE.to_coef_array(S3)
-    print AE.inv() * AE
-print
+    print((AE.inv() * AE))
+print()
 # Got rank 2
 
 # ----------------------------------------------------------------
 # 559B final problem 1b.
 
-print "-" * 64
+print(("-" * 64))
 
 S4   = snc_gm.get_elements(4)
 
@@ -99,17 +99,17 @@ s143 = pmtc_tm.from_cycle([1,4,3], 4)
 P = cgpalg_tm.from_pmtns([s1, s12])
 Q = cgpalg_tm.from_pmtns_with_parity([s1, s13, s14, s34, s134, s143])
 E = P*Q
-print "P:", P
-print "Q:", Q
-print "E:", E
-print "E*E", E*E
-print
+print(("P:", P))
+print(("Q:", Q))
+print(("E:", E))
+print(("E*E", E*E))
+print()
 
-print "AEs:"
+print("AEs:")
 for g in S4:
     A = cgpalg_tm.cgpalg_t([[1, g]])
     AE = A * E
-    print AE.to_coef_array(S4)
-print
+    print((AE.to_coef_array(S4)))
+print()
 # Got rank 3
 

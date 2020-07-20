@@ -13,51 +13,51 @@ import copy
 
 # ----------------------------------------------------------------
 s = pmtc_tm.from_cycles([[1,2,3],[4,5]], 6)
-print s
+print(s)
 s = pmtc_tm.from_cycle([1,2,3], 6)
-print s
+print(s)
 
 s = pmti_tm.from_cycles([[1,2,3],[4,5]], 6)
-print s
+print(s)
 s = pmti_tm.from_cycle([1,2,3], 6)
-print s
+print(s)
 
 # ----------------------------------------------------------------
-s = pmtc_tm.from_cycle([1,2,3], 6); ct = s.cycle_type(); print s, ct
-s = pmtc_tm.from_cycles([[1,2,3],[4,5]], 6); ct = s.cycle_type(); print s, ct
-s = pmtc_tm.from_cycles([[1,2],[3],[4,5]], 6); ct = s.cycle_type(); print s, ct
-print
+s = pmtc_tm.from_cycle([1,2,3], 6); ct = s.cycle_type(); print((s, ct))
+s = pmtc_tm.from_cycles([[1,2,3],[4,5]], 6); ct = s.cycle_type(); print((s, ct))
+s = pmtc_tm.from_cycles([[1,2],[3],[4,5]], 6); ct = s.cycle_type(); print((s, ct))
+print()
 
-print "random pmtcs:"
+print("random pmtcs:")
 for i in range(0, 10):
     pi = pmtc_tm.rand_pmtc(4)
-    print pi
-print
+    print(pi)
+print()
 
-print "random pmtis:"
+print("random pmtis:")
 for i in range(0, 10):
     pi = pmti_tm.rand_pmti(4)
-    print pi
-print
+    print(pi)
+print()
 
 
-print "random pmtcs:"
+print("random pmtcs:")
 for i in range(0, 10):
     pi = pmtc_tm.rand_pmtc(20)
     ct = pi.cycle_type()
-    print pi, ct
-print
+    print((pi, ct))
+print()
 
-print "random pmtis:"
+print("random pmtis:")
 for i in range(0, 10):
     pi = pmti_tm.rand_pmti(20)
     ct = pi.cycle_type()
-    print pi, ct
-print
+    print((pi, ct))
+print()
 
-print "random pmtcs:"
+print("random pmtcs:")
 for i in range(0, 10):
     pi = pmtc_tm.rand_pmtc(100)
     ct = pi.cycle_type()
-    print ct
-print
+    print(ct)
+print()

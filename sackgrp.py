@@ -14,7 +14,7 @@ from sackcoset import *
 def sackexp(x, n):
     # Naive for now; binary exp'n later
     if (n <= 0):
-        print "sackexp:  can't do non-positive exponent", n
+        print("sackexp:  can't do non-positive exponent", n)
         sys.exit(1)
     y = x
     while (n > 1):
@@ -31,8 +31,8 @@ def print_cayley_table(G):
     for a in G:
         for b in G:
             c = a*b
-            print c,
-        print 
+            print(c, end=' ')
+        print() 
 
 # ----------------------------------------------------------------
 def get_conj_classes(G):
@@ -72,8 +72,8 @@ def print_conj_classes(G):
     classes = get_conj_classes(G)
     for cl in classes:
         for g in cl:
-            print g,
-        print
+            print(g, end=' ')
+        print()
 
 # ----------------------------------------------------------------
 def find_id(G):
@@ -107,7 +107,7 @@ def get_order(x):
 def get_cycsgr(x):
     k = get_order(x)
     e = sackexp(x, k)
-    cycsgr = range(0, k)
+    cycsgr = list(range(0, k))
     xp = e
     for i in range(0, k):
         cycsgr[i] = xp
@@ -272,10 +272,10 @@ def nilbracket(G, Gi):
 def is_nilpotent(G):
     verbose = 1
     if (verbose):
-        print "nilp check"
-        print "Gp ",
+        print("nilp check")
+        print("Gp ", end=' ')
         print_set_as_row(G)
-        print
+        print()
     Gp = copy.copy(G)
     while (1):
         Gpp = nilbracket(G,Gp)
@@ -283,9 +283,9 @@ def is_nilpotent(G):
         if (verbose):
             #print "gp: ",
             #print_set_as_row(Gp)
-            print "gpp:",
+            print("gpp:", end=' ')
             print_set_as_row(Gpp)
-            print
+            print()
 
         np  = len(Gp)
         npp = len(Gpp)
@@ -308,10 +308,10 @@ def derived_subgroup(G):
 def is_solvable(G):
     verbose = 1
     if (verbose):
-        print "slv check"
-        print "Gp ",
+        print("slv check")
+        print("Gp ", end=' ')
         print_set_as_row(G)
-        print
+        print()
     Gp = copy.copy(G)
     while (1):
         Gpp = derived_subgroup(Gp)
@@ -319,9 +319,9 @@ def is_solvable(G):
         if (verbose):
             #print "gp: ",
             #print_set_as_row(Gp)
-            print "gpp:",
+            print("gpp:", end=' ')
             print_set_as_row(Gpp)
-            print
+            print()
 
         np  = len(Gp)
         npp = len(Gpp)
@@ -336,7 +336,7 @@ def direct_product(G1, G2):
     n1 = len(G1)
     n2 = len(G2)
     n3 = n1 * n2
-    G3 = range(0, n3)
+    G3 = list(range(0, n3))
     k = 0
     for i in range(0, n1):
         for j in range(0, n2):
@@ -353,16 +353,16 @@ def quotient(G, H):
     oG = len(G)
     oH = len(H)
     if ((oG % oH) != 0):
-        print "quotient:  |H| (" + str(oG) + ") must divide |G| (" + str(oH) + ")."
+        print("quotient:  |H| (" + str(oG) + ") must divide |G| (" + str(oH) + ").")
         raise RuntimeError
     iGH = oG / oH
     if (iGH == 0):
-        print "Empty quotient: |H| = " + str(oG) + ", |G| = " + str(oH) + "."
+        print("Empty quotient: |H| = " + str(oG) + ", |G| = " + str(oH) + ".")
         raise RuntimeError
 
     GH = []
     for g in G:
-        gHe = range(0, oH)
+        gHe = list(range(0, oH))
         for j in range(0, oH):
             gHe[j] = g * H[j]
         gH = coset(gHe)

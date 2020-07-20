@@ -28,13 +28,13 @@ def foo2():
 def foo3():
     G = quatu_gm.get_elements_str("")
     H = [quatu_tm.quatu_t(0), quatu_tm.quatu_t(1)];
-    print "G:"
+    print("G:")
     print_set_as_column(G)
-    print
-    print "H:"
+    print()
+    print("H:")
     print_set_as_column(H)
-    print
-    print "G/H:"
+    print()
+    print("G/H:")
     GH = quotient(G, H)
     print_set_as_column(GH)
 
@@ -42,35 +42,35 @@ def foo3():
 def foo4():
 
     G = quatu_gm.get_elements_str("")
-    print "G:"
+    print("G:")
     print_set_as_column(G)
-    print
+    print()
 
     H = [quatu_tm.quatu_t(0), quatu_tm.quatu_t(1)];
-    print "H:"
+    print("H:")
     print_set_as_column(H)
-    print
+    print()
 
     GH = quotient(G, H)
-    print "G/H:"
+    print("G/H:")
     print_set_as_column(GH)
-    print
+    print()
 
     K = v4_gm.get_elements_str("");
-    print "K:"
+    print("K:")
     print_set_as_column(K)
-    print
+    print()
 
     G3 = direct_product(GH, K)
-    print "G/H x K:"
+    print("G/H x K:")
     print_set_as_column(G3)
-    print
+    print()
 
     #print_cayley_table(G3)
-    print "Z(G/H x K):"
+    print("Z(G/H x K):")
     Z = get_center(G3)
     print_set_as_column(Z)
-    print
+    print()
 
 # ----------------------------------------------------------------
 def foo5():
@@ -79,7 +79,7 @@ def foo5():
         y = x.inv()
         xy = x*y
         yx = y*x
-        print x, y, xy, yx
+        print((x, y, xy, yx))
 
 # ----------------------------------------------------------------
 foo1()

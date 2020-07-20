@@ -109,7 +109,7 @@ class gint_t:
 #print a, "%", b, "=", r
 #print "qb+r", q*b + r
 
-print
+print()
 
 
 a = gint_t(7,-3)
@@ -120,7 +120,7 @@ for i in range(0,10):
         break
     q = a/b
     r = a%b
-    print a, b, q, r
+    print((a, b, q, r))
     a = b
     b = r
 

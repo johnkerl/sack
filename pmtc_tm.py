@@ -76,13 +76,13 @@ class pmtc_t:
     def __mul__(a,b):
         if (a.n != b.n):
             raise RuntimeError("mul() length mismatch: %d != %d" % ((a.n, b.n)))
-        c = pmtc_t(range(1, a.n+1), a.n)
+        c = pmtc_t(list(range(1, a.n+1)), a.n)
         for i in range(1, a.n+1):
             c.zimages[i] = a.zimages[b.zimages[i]]
         return c
 
     def inv(a):
-        c = pmtc_t(range(1, a.n+1), a.n)
+        c = pmtc_t(list(range(1, a.n+1)), a.n)
         for i in range(1, c.n+1):
             c.zimages[a.zimages[i]] = i
         return c
@@ -109,9 +109,9 @@ class pmtc_t:
         for src in range(1, self.n+1):
             if self.zimages[src] == dst:
                 return src
-        print >> sys.stderr, "pmtc.inv_img: inverse not found."
-        print >> sys.stderr, "input       = ", dst
-        print >> sys.stderr, "permutation = ", self
+        print("pmtc.inv_img: inverse not found.", file=sys.stderr)
+        print("input       = ", dst, file=sys.stderr)
+        print("permutation = ", self, file=sys.stderr)
         sys.exit(1)
 
 
@@ -185,7 +185,7 @@ class pmtc_t:
 
     def cycle_type(self):
         cd = self.cycle_decomposition()
-        ct = map(len, cd)
+        ct = list(map(len, cd))
         ct.sort(reverse=True)
         return ct
 
@@ -208,7 +208,7 @@ class pmtc_t:
     def transposition_decomposition(self):
         taus = []
         n = self.n
-        id_imgs = range(1, n+1)
+        id_imgs = list(range(1, n+1))
         sigma = pmtc_t(self.zimages[1:], n)
         done = False
         while not done:
@@ -236,7 +236,7 @@ class pmtc_t:
     # e.g. 1,2:3,4
     # xxx this method needs some comments. :)
     def scan(self, cycles_string, n):
-        zimages = range(0, n+1)
+        zimages = list(range(0, n+1))
         cycle_strings = re.split(':', cycles_string)
 
         # Loop over cycles, e.g. given 1,2:3,4, we have 3,4 and 1,2.
@@ -271,7 +271,7 @@ class pmtc_t:
     # e.g. [[1,2],[3,4]]
     # xxx this method also needs some comments. :)
     def cycle_fill(self, cycles, n):
-        zimages = range(0, n+1)
+        zimages = list(range(0, n+1))
         # Loop over cycles, e.g. given [[1,2],[3,4]] we have [3,4] and [1,2].
         # (Composition goes from right to left so we have to loop backward.)
         num_cycles = len(cycles)
@@ -344,12 +344,12 @@ class pmtc_t:
 #       return P
 
 def from_cycles(cycles, n):
-    obj = pmtc_t(range(1, n+1), n)
+    obj = pmtc_t(list(range(1, n+1)), n)
     obj.cycle_fill(cycles, n)
     return obj
 
 def from_cycle(cycle, n):
-    obj = pmtc_t(range(1, n+1), n)
+    obj = pmtc_t(list(range(1, n+1)), n)
     obj.cycle_fill([cycle], n)
     return obj
 
@@ -360,7 +360,7 @@ def from_cycle_type(ct):
     k = 1
     cycles = []
     for elt in ct:
-        cycle = range(k, k+elt)
+        cycle = list(range(k, k+elt))
         cycles.append(cycle)
         k += elt
         n += elt
@@ -434,14 +434,14 @@ def params_from_string(params_string):
 
 def from_string(value_string, params_string):
     n = params_from_string(params_string)
-    obj = pmtc_t(range(1, n+1), n)
+    obj = pmtc_t(list(range(1, n+1)), n)
     obj.scan(value_string, n)
     return obj
 
 def kth_pmtc(k, n, nfact):
     nifact = nfact
-    images = range(0, n)
-    temp   = range(0, n+1)
+    images = list(range(0, n))
+    temp   = list(range(0, n+1))
 
     ni = n
     for pos in range(0, n):
@@ -457,7 +457,7 @@ def kth_pmtc(k, n, nfact):
     return pmtc_t(images, n)
 
 def identity_pmtc(n):
-    return pmtc_t(range(1, n+1), n)
+    return pmtc_t(list(range(1, n+1)), n)
 
 # ================================================================
 # rand_pmtc:  returns a permutation on N symbols, uniformly distributed on S_N.
@@ -517,7 +517,7 @@ def identity_pmtc(n):
 # Later note:  It turns out that this is Knuth's algorithm.
 
 def rand_pmtc(N):
-    zimages = range(0, N+1)
+    zimages = list(range(0, N+1))
     unused_start = 1
     num_unused   = N
 
@@ -552,7 +552,7 @@ def rand_pmtc(N):
 def bad_rand_pmtc(N):
     # Knuth's anti-algorithm.  The code here is an experiment
     # to see what kind of distribution results.
-    zimages = range(0, N+1)
+    zimages = list(range(0, N+1))
 
     for k in range(1, N+1):
         # Select a pseudorandom element from the pool of used *and* unused images.

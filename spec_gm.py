@@ -27,7 +27,7 @@ def get_elements_str(params_string):
         try:
             file_handle = open(file_name, 'r')
         except:
-            print "Couldn't open \"" + file_name + "\" for read."
+            print(("Couldn't open \"" + file_name + "\" for read."))
             sys.exit(1)
 
     for line in file_handle:
@@ -49,7 +49,7 @@ def get_elements_str(params_string):
     spec_tm.install_table(cayley_table_with_names)
 
     n = len(cayley_table_with_names)
-    elts = range(0, n)
+    elts = list(range(0, n))
     for i in range(0, n):
         elts[i] = spec_tm.spec_t(i)
     return elts

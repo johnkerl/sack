@@ -79,8 +79,8 @@ class modmul_t:
         self.check_lengths(len(res_strings), len(mod_strings), res_strings,
             mod_strings)
         n = len(res_strings)
-        resarray = range(0, n)
-        modarray = range(0, n)
+        resarray = list(range(0, n))
+        modarray = list(range(0, n))
         for i in range(0, n):
             resarray[i] = int(res_strings[i])
             modarray[i] = int(mod_strings[i])
@@ -97,34 +97,34 @@ class modmul_t:
 
     def check_length(self, length, desc):
         if (length < 1):
-            print desc, "length", str(length), "< 1"
+            print((desc, "length", str(length), "< 1"))
             raise RuntimeError
 
     def check_lengths(self, len1, len2, desc1, desc2):
         self.check_length(len1, desc1)
         self.check_length(len2, desc2)
         if (len1 != len2):
-            print desc1, "length", str(len1), "!=", desc2, "length", len2
+            print((desc1, "length", str(len1), "!=", desc2, "length", len2))
             raise RuntimeError
 
     def check_moduli(self, mods):
         for i in range(0, len(mods)):
             if (mods[i] < 1):
-                print "Modulus", mods[i], "< 1 in", mods
+                print(("Modulus", mods[i], "< 1 in", mods))
                 raise RuntimeError
 
     def check_moduli_pair(self, mods1, mods2):
         if (mods1 != mods2):
-            print "Mismatched moduli", mods1, ", ", mods2
+            print(("Mismatched moduli", mods1, ", ", mods2))
             raise RuntimeError
 
 def params_from_string(params_string):
     if (len(params_string) == 0):
-        print "Modadd requires non-empty parameter string"
+        print("Modadd requires non-empty parameter string")
         sys.exit(1)
     mod_strings = re.split(',', params_string)
     n = len(mod_strings)
-    mod_array = range(0, n)
+    mod_array = list(range(0, n))
     for i in range(0, n):
         mod_array[i] = int(mod_strings[i])
     return mod_array

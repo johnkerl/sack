@@ -91,7 +91,7 @@ def intexp(x, e):
     rv = 1
 
     if (e < 0):
-        print "intexp:  negative exponent", e, "disallowed."
+        print(("intexp:  negative exponent", e, "disallowed."))
         raise RuntimeError
 
     while (e != 0):
@@ -122,7 +122,7 @@ def intmodexp(x, e, m):
 # ----------------------------------------------------------------
 def intmodrecip(x, m):
     if (gcd(x, m) != 1):
-        print "intmodrecip:  impossible inverse", x, "mod", m
+        print(("intmodrecip:  impossible inverse", x, "mod", m))
         raise RuntimeError
     phi = eulerphi(m)
     return intmodexp(x, phi-1, m)
@@ -130,7 +130,7 @@ def intmodrecip(x, m):
 # ----------------------------------------------------------------
 def factorial(n):
     if (n < 0):
-        print "factorial: negative input disallowed."
+        print("factorial: negative input disallowed.")
         raise RuntimeError
     if (n < 2):
         return 1

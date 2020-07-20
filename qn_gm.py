@@ -14,7 +14,7 @@ import genquat_tm
 def get_elements_str(params_string):
     n = genquat_tm.params_from_string(params_string)
     fourn = n + n + n + n
-    elts = range(0, fourn)
+    elts = list(range(0, fourn))
     k = 0
     for i in range(0, n):
         for j in range(0, 4):

@@ -202,7 +202,7 @@ def main():
     else:
         group_params_string = type_and_group_params[1]
 
-    if (not type_lookup.has_key(type_name)):
+    if (not (type_name in type_lookup)):
         print("No such group type: " + type_name)
         sys.exit(1)
     type_spec = type_lookup[type_name]
@@ -230,8 +230,8 @@ def main():
         #   N.  This means we need to use N's I/O methods.
 
     cmd_name = sys.argv[2];
-    if (not cmd_lookup.has_key(cmd_name)):
-        print "No such command: " + cmd_name
+    if (not (cmd_name in cmd_lookup)):
+        print("No such command: " + cmd_name)
         sys.exit(1)
     handler = cmd_lookup[cmd_name]
 
@@ -244,16 +244,16 @@ def main():
 def check_min_args(cmd_name, cmd_argv, n):
     actual = len(cmd_argv)
     if (actual < n):
-        print "%s: minimum %d argument(s) needed; got %d." % (
-            cmd_name, n, actual )
+        print("%s: minimum %d argument(s) needed; got %d." % (
+            cmd_name, n, actual))
         sys.exit(1)
 
 # ----------------------------------------------------------------
 def check_num_args(cmd_name, cmd_argv, n):
     actual = len(cmd_argv)
     if (actual != n):
-        print "%s: %d argument(s) needed; got %d." % (
-            cmd_name, n, actual )
+        print("%s: %d argument(s) needed; got %d." % (
+            cmd_name, n, actual))
         sys.exit(1)
 
 # ----------------------------------------------------------------
@@ -265,7 +265,7 @@ def group_from_file(type_spec, params_string, file_name):
         try:
             file_handle = open(file_name, 'r')
         except:
-            print "Couldn't open \"" + file_name + "\" for read."
+            print("Couldn't open \"" + file_name + "\" for read.")
             sys.exit(1)
     for line in file_handle:
         if (line[-1] == '\n'):
@@ -279,8 +279,8 @@ def group_from_file(type_spec, params_string, file_name):
 # ----------------------------------------------------------------
 def get_group(type_name, group_params_string, file_name):
     if (file_name == "."):
-        if (not group_lookup.has_key(type_name)):
-            print "No such full group: " + type_name
+        if (not (type_name in group_lookup)):
+            print("No such full group: " + type_name)
             sys.exit(1)
         group_spec = group_lookup[type_name]
         G = group_spec.get_elements_str(group_params_string)
@@ -296,7 +296,7 @@ def cmd_mul(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     for arg in cmd_argv[1:]:
         y = type_spec.from_string(arg, group_params_string)
         x = x * y
-    print x
+    print(x)
 
 # ----------------------------------------------------------------
 def cmd_add(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
@@ -305,7 +305,7 @@ def cmd_add(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     for arg in cmd_argv[1:]:
         y = type_spec.from_string(arg, group_params_string)
         x = x + y
-    print x
+    print(x)
 
 # ----------------------------------------------------------------
 def cmd_close(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
@@ -322,7 +322,7 @@ def cmd_exp(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     for arg in cmd_argv[0:-1]:
         x = type_spec.from_string(arg, group_params_string)
         y = sackexp(x, e)
-        print y
+        print(y)
 
 # ----------------------------------------------------------------
 # E.g. "sack s:4 inverse 1,2,3,4" prints "1,2,3,4 1,4,3,2"
@@ -331,7 +331,7 @@ def cmd_inverse(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     for arg in cmd_argv:
         x = type_spec.from_string(arg, group_params_string)
         y = x.inv();
-        print x, y
+        print(x, y)
 
 # ----------------------------------------------------------------
 def cmd_commutator(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
@@ -343,9 +343,9 @@ def cmd_commutator(cmd_name, cmd_argv, group_params_string, type_name, type_spec
         xi = x.inv()
         yi = y.inv()
         bracket = x * y * xi * yi
-        print bracket
+        print(bracket)
     else:
-        print "commutator:  needed 2 elements; got %d." % (argc)
+        print("commutator:  needed 2 elements; got %d." % (argc))
         sys.exit(1)
 
 # ----------------------------------------------------------------
@@ -354,7 +354,7 @@ def cmd_eorder(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     for arg in cmd_argv:
         x = type_spec.from_string(arg, group_params_string)
         k = get_order(x)
-        print x, k
+        print(x, k)
 
 # ----------------------------------------------------------------
 def cmd_cycsgr(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
@@ -391,16 +391,16 @@ def cmd_find_id(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     G = get_group(type_name, group_params_string, cmd_argv[0])
     [found, e] = find_id(G)
     if (found):
-        print e
+        print(e)
     else:
-        print "No identity found"
+        print("No identity found")
 
 # ----------------------------------------------------------------
 # E.g. "sack s:4 order ." prints 24.
 def cmd_order(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
-    print len(G)
+    print(len(G))
 
 # ----------------------------------------------------------------
 # E.g. "sack s:4 orders . | left" prints
@@ -436,7 +436,7 @@ def cmd_orders(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     orders = get_orders(G)
     n = len(G)
     for k in range(0, n):
-        print G[k], orders[k]
+        print(G[k], orders[k])
 
 # ----------------------------------------------------------------
 # E.g. "sack s:4 max_order ." prints 4.
@@ -444,7 +444,7 @@ def cmd_max_order(cmd_name, cmd_argv, group_params_string, type_name,type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     m = get_max_order(G)
-    print m
+    print(m)
 
 # ----------------------------------------------------------------
 # E.g. "sack s:4 inverses . | left" prints
@@ -478,7 +478,7 @@ def cmd_inverses(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     G = get_group(type_name, group_params_string, cmd_argv[0])
     for x in G:
         y = x.inv()
-        print x, y
+        print(x, y)
 
 # ----------------------------------------------------------------
 # E.g. "sack s:4 center ." prints 1 (only the identity permutation commutes
@@ -494,45 +494,45 @@ def cmd_isgroup(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     if (is_group(G)):
-        print "is a group"
+        print("is a group")
     else:
-        print "not a group"
+        print("not a group")
 
 # ----------------------------------------------------------------
 def cmd_closed(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     if (is_closed(G)):
-        print "closed"
+        print("closed")
     else:
-        print "non-closed"
+        print("non-closed")
 
 # ----------------------------------------------------------------
 def cmd_associative(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     if (is_associative(G)):
-        print "associative"
+        print("associative")
     else:
-        print "non-associative"
+        print("non-associative")
 
 # ----------------------------------------------------------------
 def cmd_has_unique_id(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     if (has_unique_id(G)):
-        print "has unique identity"
+        print("has unique identity")
     else:
-        print "does not have unique identity"
+        print("does not have unique identity")
 
 # ----------------------------------------------------------------
 def cmd_has_inverses(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     if (has_inverses(G)):
-        print "has inverses"
+        print("has inverses")
     else:
-        print "does not have inverses"
+        print("does not have inverses")
 
 # ----------------------------------------------------------------
 # E.g. "sack s:4 cyclic ." prints "non-cyclic"; "sack modadd:4 cyclic ." prints "cyclic".
@@ -540,9 +540,9 @@ def cmd_cyclic(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     if (is_cyclic(G)):
-        print "cyclic"
+        print("cyclic")
     else:
-        print "non-cyclic"
+        print("non-cyclic")
 
 # ----------------------------------------------------------------
 # E.g. "sack s:4 abelian ." prints "non-abelian"; "sack modadd:4 abelian ." prints "abelian".
@@ -550,27 +550,27 @@ def cmd_abelian(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     if (is_abelian(G)):
-        print "abelian"
+        print("abelian")
     else:
-        print "non-abelian"
+        print("non-abelian")
 
 # ----------------------------------------------------------------
 def cmd_nilpotent(cmd_name, cmd_argv, group_params_string, type_name,type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     if (is_nilpotent(G)):
-        print "nilpotent"
+        print("nilpotent")
     else:
-        print "non-nilpotent"
+        print("non-nilpotent")
 
 # ----------------------------------------------------------------
 def cmd_solvable(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     check_num_args(cmd_name, cmd_argv, 1)
     G = get_group(type_name, group_params_string, cmd_argv[0])
     if (is_solvable(G)):
-        print "solvable"
+        print("solvable")
     else:
-        print "non-solvable"
+        print("non-solvable")
 
 # ----------------------------------------------------------------
 def cmd_derived(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
@@ -593,11 +593,11 @@ def cmd_subgroup(cmd_name, cmd_argv, group_params_string, type_name, type_spec):
     G = get_group(type_name, group_params_string, cmd_argv[0])
     H = get_group(type_name, group_params_string, cmd_argv[1])
     if (not subset_of(H, G)):
-        print "Not a subset."
+        print("Not a subset.")
     elif (not is_group(H)):
-        print "Not a subgroup."
+        print("Not a subgroup.")
     else:
-        print "Is a subgroup."
+        print("Is a subgroup.")
 
 # ----------------------------------------------------------------
 cmd_lookup = {
@@ -643,33 +643,33 @@ cmd_lookup = {
 
 # ----------------------------------------------------------------
 def short_usage(argv0):
-    print "Usage: " + argv0 + " {group type} {command} {command arguments ...}"
-    print "Please type \"" + argv0 + " --help\" for detailed help."
+    print("Usage: " + argv0 + " {group type} {command} {command arguments ...}")
+    print("Please type \"" + argv0 + " --help\" for detailed help.")
     sys.exit(1)
 
 # ----------------------------------------------------------------
 def long_usage(argv0):
-    print "Usage: " + argv0 + " {group type} {command} {command arguments ...}"
-    print
+    print("Usage: " + argv0 + " {group type} {command} {command arguments ...}")
+    print()
 
-    print "Example: \"" + argv0 + " d:4 center .\""
-    print
+    print("Example: \"" + argv0 + " d:4 center .\"")
+    print()
 
-    print "Group types:",
+    sys.stdout.write("Group types:")
     group_types = type_lookup.keys()
     group_types.sort()
     for k in group_types:
-        print k,
-    print
-    print
+        sys.stdout.write(k)
+    print()
+    print()
 
-    print "Commands:",
+    sys.stdout.write("Commands:")
     cmd_names = cmd_lookup.keys()
     cmd_names.sort()
     for k in cmd_names:
-        print k,
-    print
-    print
+        sys.stdout.write(k)
+    print()
+    print()
 
     sys.exit(1)
 

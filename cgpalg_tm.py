@@ -116,7 +116,7 @@ class cgpalg_t:
         bi = cgpalg_t([])
         n = len(self.pairs)
         if (n == 0):
-            print "cgpalg_t.inv:  division by zero."
+            print("cgpalg_t.inv:  division by zero.")
             sys.exit(1)
         recip_n = 1.0/n
         for pair in self.pairs:

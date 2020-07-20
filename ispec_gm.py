@@ -26,7 +26,7 @@ def get_elements_str(params_string):
         try:
             file_handle = open(file_name, 'r')
         except:
-            print "Couldn't open \"" + file_name + "\" for read."
+            print(("Couldn't open \"" + file_name + "\" for read."))
             sys.exit(1)
 
     lno = 0
@@ -49,7 +49,7 @@ def get_elements_str(params_string):
             try:
                 row.append(int(cs))
             except:
-                print "Scan error on \"%s\", column %d, line %d, file %s" % (cs,colno,lno,file_name)
+                print(("Scan error on \"%s\", column %d, line %d, file %s" % (cs,colno,lno,file_name)))
                 sys.exit(1)
         matrix.append(row)
     if (file_name != "-"):
@@ -58,7 +58,7 @@ def get_elements_str(params_string):
     ispec_tm.install_table(matrix)
 
     n=len(matrix)
-    elts = range(0, n)
+    elts = list(range(0, n))
     for i in range(0, n):
         elts[i] = ispec_tm.ispec_t(i)
     return elts

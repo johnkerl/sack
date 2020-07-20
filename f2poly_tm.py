@@ -59,7 +59,7 @@ def imul(abits, bbits):
 
 def iquot_and_rem(abits, bbits):
     if bbits == 0: # Divisor is zero.
-        print >> sys.stderr, "f2poly_tm.iquot_and_rem: Divide by zero."
+        print("f2poly_tm.iquot_and_rem: Divide by zero.", file=sys.stderr)
         sys.exit(1)
     divisor_l1_pos = idegree(bbits)
 
@@ -94,7 +94,7 @@ def iquot_and_rem(abits, bbits):
 
 def imod(abits, bbits):
     if bbits == 0: # Divisor is zero.
-        print >> sys.stderr, "f2poly_tm.iquot_and_rem: Divide by zero."
+        print("f2poly_tm.iquot_and_rem: Divide by zero.", file=sys.stderr)
         sys.exit(1)
     divisor_l1_pos = idegree(bbits)
 
@@ -128,10 +128,10 @@ def iexp(abits, e):
 
     if abits == 0:
         if e == 0:
-            print >> sys.stderr, "f2poly_t.iexp:  0 ^ 0 undefined."
+            print("f2poly_t.iexp:  0 ^ 0 undefined.", file=sys.stderr)
             sys.exit(1)
         elif e < 0:
-            print >> sys.stderr, "f2poly_t.iexp:  division by zero."
+            print("f2poly_t.iexp:  division by zero.", file=sys.stderr)
             sys.exit(1)
         else:
             return 0
@@ -139,7 +139,7 @@ def iexp(abits, e):
         return 1
     else: # Degree 1 or higher.
         if e < 0:
-            print >> sys.stderr, "f2poly_t.iexp:  division by non-unit."
+            print("f2poly_t.iexp:  division by non-unit.", file=sys.stderr)
             sys.exit(1)
         else:
             while e != 0:
@@ -218,8 +218,7 @@ class f2poly_t:
     # xxx mv to an ifunc
     def check_unsigned_bits(self):
         if self.bits < 0:
-            print >> sys.stderr, \
-                "f2poly_t:  signed input %d detected." % (self.bits)
+            print("f2poly_t:  signed input %d detected." % (self.bits), file=sys.stderr)
             sys.exit(1)
         return self.bits
 

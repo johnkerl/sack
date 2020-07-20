@@ -106,8 +106,8 @@ class metacyc_t:
 
         tq = sackint.intmodexp(t, q, p)
         if ((tq % p) != 1):
-            print "metacyc:  t^q must be 1 mod p"
-            print "Got p =", p, "q =", q, "t =", t
+            print("metacyc:  t^q must be 1 mod p")
+            print(("Got p =", p, "q =", q, "t =", t))
             raise RuntimeError
 
         # xxx jrk 2006-11-28:  allow trivial homomorphisms.
@@ -130,7 +130,7 @@ class metacyc_t:
 
     def __mul__(a,b):
         if ((a.p != b.p) or (a.q != b.q) or (a.t != b.t)):
-            print "Parameter mismatch in metacyc mul"
+            print("Parameter mismatch in metacyc mul")
             raise RuntimeError
         ci = (a.i + b.i * sackint.intmodexp(a.t, a.j, a.p)) % a.p
         cj = (a.j + b.j) % a.q
@@ -167,12 +167,12 @@ def params_from_string(params_string):
         q = int(pqt[1])
         [got_it, t] = find_t(p, q)
         if (not got_it):
-            print "metacyc_t:  No t found for p =", p, "q =", q
-            print "Got: ", params_string
+            print(("metacyc_t:  No t found for p =", p, "q =", q))
+            print(("Got: ", params_string))
             raise IOError
     else:
-        print "metacyc_tm.from_string:  expected parameters p,q or p,q,t."
-        print "Got: ", params_string
+        print("metacyc_tm.from_string:  expected parameters p,q or p,q,t.")
+        print(("Got: ", params_string))
         raise IOError
     return [p, q, t]
 

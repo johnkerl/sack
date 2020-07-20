@@ -13,7 +13,7 @@ import quatu_tm
 
 def get_elements_str(params_string):
     not_used = quatu_tm.params_from_string(params_string)
-    elts = range(0, 8)
+    elts = list(range(0, 8))
     for i in range(0, 8):
         elts[i] = quatu_tm.quatu_t(i)
     return elts

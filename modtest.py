@@ -13,7 +13,7 @@ b = mod_t([4],[11])
 c = a + b
 d = a * b
 
-print a
-print b
-print c
-print d
+print(a)
+print(b)
+print(c)
+print(d)

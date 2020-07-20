@@ -25,7 +25,7 @@ def name_to_index(string, name_table):
 def name_to_index_or_die(string, name_table):
     [found, idx] = name_to_index(string, name_table)
     if (not found):
-        print "spec scan failure on \"%s\"." % (string)
+        print(("spec scan failure on \"%s\"." % (string)))
         sys.exit(1)
     return idx
 

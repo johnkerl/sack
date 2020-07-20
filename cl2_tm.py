@@ -120,8 +120,8 @@ def params_from_string(params_string):
         ok = 0
 
     if (not ok):
-        print "cl2_tm.from_string:  expected parameters n,sign."
-        print "Got: ", params_string
+        print("cl2_tm.from_string:  expected parameters n,sign.")
+        print(("Got: ", params_string))
         raise IOError
     return [n, sqsign]
 

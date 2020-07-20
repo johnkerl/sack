@@ -59,7 +59,7 @@ class cgpalg_t:
         for k in range(0, len(self.gp_elts)):
             if (g == self.gp_elts[k]):
                 return k
-        print "cgpalg_t:  Couldn't find [", g, "] in gp_elts array."
+        print(("cgpalg_t:  Couldn't find [", g, "] in gp_elts array."))
         sys.exit(1)
 
     def __mul__(a,b):

@@ -28,4 +28,4 @@ for i in range(0, count):
         pi = pmtc_tm.rand_pmtc(N)
     #ct = pi.cycle_type()
     #print ct
-    print pi
+    print(pi)
