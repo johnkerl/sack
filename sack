@@ -650,26 +650,28 @@ def short_usage(argv0):
 # ----------------------------------------------------------------
 def long_usage(argv0):
     print("Usage: " + argv0 + " {group type} {command} {command arguments ...}")
-    print()
+    print("")
 
     print("Example: \"" + argv0 + " d:4 center .\"")
-    print()
+    print("")
 
-    sys.stdout.write("Group types:")
+    sys.stdout.write("Group types:\n")
     group_types = type_lookup.keys()
     group_types.sort()
     for k in group_types:
         sys.stdout.write(k)
-    print()
-    print()
+        sys.stdout.write(' ') # TODO: join w/ list comprehension
+    print("")
+    print("")
 
-    sys.stdout.write("Commands:")
+    sys.stdout.write("Commands:\n")
     cmd_names = cmd_lookup.keys()
     cmd_names.sort()
     for k in cmd_names:
         sys.stdout.write(k)
-    print()
-    print()
+        sys.stdout.write(' ') # TODO: join w/ list comprehension
+    print("")
+    print("")
 
     sys.exit(1)
 

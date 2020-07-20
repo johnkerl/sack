@@ -14,7 +14,8 @@ def print_set_as_column(S):
 # ----------------------------------------------------------------
 def print_set_as_row(S):
     for a in S:
-        print(a, end=' ')
+        sys.stdout.write(a)
+        sys.stdout.write(' ') # TODO: join w/ list comprehension
     print()
 
 # ----------------------------------------------------------------

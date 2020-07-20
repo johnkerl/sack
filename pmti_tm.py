@@ -77,8 +77,8 @@ class pmti_t:
         test.sort()
         for i in range(1, self.n+1):
             if (test[i] != i):
-                print("Not a permutation:", self.zimages)
-                print("Test:", test)
+                print(("Not a permutation:", self.zimages))
+                print(("Test:", test))
                 raise RuntimeError
 
     def inv(a):
@@ -155,9 +155,9 @@ class pmti_t:
         for src in range(1, self.n+1):
             if self.zimages[src] == dst:
                 return src
-        print("pmti.inv_img: inverse not found.", file=sys.stderr)
-        print("input       = ", dst, file=sys.stderr)
-        print("permutation = ", self, file=sys.stderr)
+        sys.stderr.write("pmti.inv_img: inverse not found.\n")
+        sys.stderr.write("input       = "+dst+"\n", dst)
+        sys.stderr.write("permutation = "+self+"\n", self)
         sys.exit(1)
 
 

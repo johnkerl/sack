@@ -11,7 +11,7 @@
 
 import T_tm
 
-def get_elements_str(params_string):
+def get_elements_str(_params_string):
     elts = []
     for i in range(0, 3):
         for j in range(0, 4):

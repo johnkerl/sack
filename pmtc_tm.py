@@ -109,9 +109,9 @@ class pmtc_t:
         for src in range(1, self.n+1):
             if self.zimages[src] == dst:
                 return src
-        print("pmtc.inv_img: inverse not found.", file=sys.stderr)
-        print("input       = ", dst, file=sys.stderr)
-        print("permutation = ", self, file=sys.stderr)
+        sys.stderr.write("pmtc.inv_img: inverse not found.")
+        sys.stderr.write("input       = "+dst+"\n")
+        sys.stderr.write("permutation = "+self+"\n")
         sys.exit(1)
 
 

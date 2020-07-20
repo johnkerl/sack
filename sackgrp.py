@@ -14,7 +14,7 @@ from sackcoset import *
 def sackexp(x, n):
     # Naive for now; binary exp'n later
     if (n <= 0):
-        print("sackexp:  can't do non-positive exponent", n)
+        print(("sackexp:  can't do non-positive exponent", n))
         sys.exit(1)
     y = x
     while (n > 1):
@@ -31,7 +31,8 @@ def print_cayley_table(G):
     for a in G:
         for b in G:
             c = a*b
-            print(c, end=' ')
+            sys.stdout.write(c)
+            sys.stdout.write(' ') # TODO: join w/ list comprehension
         print() 
 
 # ----------------------------------------------------------------
@@ -72,7 +73,8 @@ def print_conj_classes(G):
     classes = get_conj_classes(G)
     for cl in classes:
         for g in cl:
-            print(g, end=' ')
+            sys.stdout.write(g)
+            sys.stdout.write(' ') # TODO: join w/ list comprehension
         print()
 
 # ----------------------------------------------------------------
@@ -273,7 +275,7 @@ def is_nilpotent(G):
     verbose = 1
     if (verbose):
         print("nilp check")
-        print("Gp ", end=' ')
+        sys.stdout.write("Gp ")
         print_set_as_row(G)
         print()
     Gp = copy.copy(G)
@@ -283,7 +285,7 @@ def is_nilpotent(G):
         if (verbose):
             #print "gp: ",
             #print_set_as_row(Gp)
-            print("gpp:", end=' ')
+            sys.stdout.write("gpp: ")
             print_set_as_row(Gpp)
             print()
 
@@ -309,7 +311,7 @@ def is_solvable(G):
     verbose = 1
     if (verbose):
         print("slv check")
-        print("Gp ", end=' ')
+        sys.stdout.write("Gp ")
         print_set_as_row(G)
         print()
     Gp = copy.copy(G)
@@ -319,7 +321,7 @@ def is_solvable(G):
         if (verbose):
             #print "gp: ",
             #print_set_as_row(Gp)
-            print("gpp:", end=' ')
+            sys.stdout.write("gpp: ")
             print_set_as_row(Gpp)
             print()
 
@@ -353,11 +355,11 @@ def quotient(G, H):
     oG = len(G)
     oH = len(H)
     if ((oG % oH) != 0):
-        print("quotient:  |H| (" + str(oG) + ") must divide |G| (" + str(oH) + ").")
+        print(("quotient:  |H| (" + str(oG) + ") must divide |G| (" + str(oH) + ")."))
         raise RuntimeError
     iGH = oG / oH
     if (iGH == 0):
-        print("Empty quotient: |H| = " + str(oG) + ", |G| = " + str(oH) + ".")
+        print(("Empty quotient: |H| = " + str(oG) + ", |G| = " + str(oH) + "."))
         raise RuntimeError
 
     GH = []
