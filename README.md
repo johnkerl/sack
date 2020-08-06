@@ -4,7 +4,7 @@ A simple abstract-algebra calculator. Includes some elementary group routines.
 
 ## Using sack
 
-* The main entry point is the script called sack.
+* The main entry point is the script called `sack`.
 * For thorough documentation please see http://johnkerl.org/doc/kerl-pyaa.pdf
 * For a quick reference please see https://github.com/johnkerl/sack/wiki
 
