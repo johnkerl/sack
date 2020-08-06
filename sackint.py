@@ -74,7 +74,7 @@ def eulerphi(n, cached_n_and_phi=[2,1]):
         return cached_n_and_phi[1]
 
     phi = 0
-    for i in range (1, n):
+    for i in range(1, n):
         if (gcd(n, i) == 1):
             phi += 1
     return phi

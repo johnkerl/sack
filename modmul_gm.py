@@ -60,7 +60,7 @@ def get_elements_str(params_string):
     phi_groups = []
     for m in mod_array:
         phi_group = []
-        for k in range (0, m):
+        for k in range(0, m):
             if (sackint.gcd(k, m) == 1):
                 phi_group.append(k)
         phi_groups.append(phi_group)

@@ -28,7 +28,7 @@ class modadd_t:
         a.check_lengths(len(a.moduli), len(b.moduli), "moduli", "moduli")
         a.check_moduli_pair(a.moduli, b.moduli)
         c = modadd_t(a.residues, a.moduli)
-        for i in range (0, len(a.moduli)):
+        for i in range(0, len(a.moduli)):
             c.residues[i] = (a.residues[i] + b.residues[i]) % c.moduli[i]
         return c
 

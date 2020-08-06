@@ -44,14 +44,14 @@ class cgpalg_t:
     def __add__(a,b):
         #a.check_lengths(len(a.gp_elts), len(b.gp_elts), "coefs", "gp_elts")
         c = cgpalg_t(a.coefs, a.gp_elts)
-        for i in range (0, len(a.coefs)):
+        for i in range(0, len(a.coefs)):
             c.coefs[i] = a.coefs[i] + b.coefs[i]
         return c
 
     def __sub__(a,b):
         #a.check_lengths(len(a.gp_elts), len(b.gp_elts), "coefs", "gp_elts")
         c = cgpalg_t(a.coefs, a.gp_elts)
-        for i in range (0, len(a.coefs)):
+        for i in range(0, len(a.coefs)):
             c.coefs[i] = a.coefs[i] - b.coefs[i]
         return c
 
@@ -67,10 +67,10 @@ class cgpalg_t:
         c = cgpalg_t(a.coefs, a.gp_elts)
         # XXX XXX XXX
         zero = a.coefs[0] - a.coefs[0]
-        for i in range (0, len(a.coefs)):
+        for i in range(0, len(a.coefs)):
             c.coefs[i] = zero
-        for i in range (0, len(a.coefs)):
-            for j in range (0, len(b.coefs)):
+        for i in range(0, len(a.coefs)):
+            for j in range(0, len(b.coefs)):
                 k = c.index_of(a.gp_elts[i] * b.gp_elts[j])
                 c.coefs[k] += a.coefs[i] * b.coefs[j]
         return c

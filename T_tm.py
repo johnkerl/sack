@@ -8,6 +8,7 @@
 # ================================================================
 
 import re
+import unittest
 
 # Type module for the T group (the third nonabelian group of order 12, other
 # than A4 and D6).  It may be thought of as Z3 semidirect Z4, where Z4 acts on
@@ -30,7 +31,7 @@ class T_t:
 
     def __mul__(a,b):
         ibi = b.i
-        if (a.j & 1):
+        if a.j & 1:
             ibi = -ibi
         ci = (a.i + ibi) % 3
         cj = (a.j + b.j) % 4
@@ -41,7 +42,7 @@ class T_t:
         # (ai, aj)(bi, bj) = (ai aj(bi), aj bj) = (0, 0)
         # Given ai and aj, find bi and bj.
         bi = (-a.i) % 3
-        if (a.j & 1):
+        if a.j & 1:
             bi = a.i % 3
         bj = (-a.j) % 4
         b = T_t(bi, bj)
@@ -59,7 +60,7 @@ class T_t:
     def __repr__(self):
         return self.__str__()
 
-def params_from_string(params_string):
+def params_from_string(_params_string):
     return 0
 
 def from_string(value_string, params_string):
@@ -69,7 +70,6 @@ def from_string(value_string, params_string):
 
 
 # ================================================================
-import unittest
 if __name__ == '__main__':
 
     class test_cases(unittest.TestCase):
