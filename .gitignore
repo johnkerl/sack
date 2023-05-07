@@ -7,3 +7,6 @@
 
 *.bak
 *.sv
+
+src/_version.py
+src/sack.egg-info/

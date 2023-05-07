@@ -1,0 +1,5 @@
+global-exclude *
+include pyproject.toml
+include MANIFEST.in
+include ./README.md
+recursive-include src *.py

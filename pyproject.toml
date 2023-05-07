@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sack"
+description = "A simple collection of finite-group types and algorithms."
+dynamic = ["version"]
+readme = "./README.md"
+dependencies = []
+requires-python = "~=3.9"
+urls = { repository = "https://github.com/johnkerl/sack" }
+classifiers = ["BSD 2-Clause License"]
+
+[project.optional-dependencies]
+dev = ["black", "isort", "mypy~=1.0", "ruff"]
+
+[tool.setuptools]
+packages.find.where = ["src"]
+package-data.sack = ["py.typed"]
+
+[tool.setuptools_scm]
+write_to = "src/_version.py"
+
+[tool.ruff]
+extend-select = ["I"]
+
+[tool.ruff.isort]
+force-single-line = true
+single-line-exclusions = ["typing", "typing_extensions"]
+
+[tool.mypy]
+check_untyped_defs = true
+enable_error_code = ["ignore-without-code"]
+warn_redundant_casts = true
+warn_unused_ignores = true
