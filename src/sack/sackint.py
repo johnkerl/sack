@@ -1,7 +1,6 @@
 #!/usr/bin/python -Wall
 
 # ================================================================
-# Please see LICENSE.txt in the same directory as this file.
 # John Kerl
 # kerl.john.r@gmail.com
 # 2007-05-31
@@ -40,7 +39,7 @@ def extgcd(a, b):
 
     while (1):
         # Divide
-        q = c / d
+        q = c // d
         r = c % d
         # Note:  now c = qd + r and 0 <= r < d
 

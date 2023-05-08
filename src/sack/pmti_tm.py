@@ -12,8 +12,8 @@
 import re
 import copy
 import random
-import sackint
-import uniqc_m
+from . import sackint
+from . import uniqc_m
 
 class pmti_t:
 
