@@ -32,6 +32,10 @@ def gcd(a, b):
 # Blankinship's algorithm
 
 def extgcd(a, b):
+    if a < 0:
+        a = -a
+    if b < 0:
+        b = -b
 
     # Initialize
     mprime = 1
@@ -72,6 +76,9 @@ def extgcd(a, b):
 # See Lutz & Ascher, 2nd. ed., p 241.
 
 def eulerphi(n, cached_n_and_phi=[2,1]):
+    if n < 0:
+        n = -n
+
     if (n == cached_n_and_phi[0]):
         # Cache hit
         return cached_n_and_phi[1]
@@ -94,8 +101,7 @@ def intexp(x, e):
     rv = 1
 
     if (e < 0):
-        print(("intexp:  negative exponent", e, "disallowed."))
-        raise RuntimeError
+        raise RuntimeError (f"intexp:  negative exponent {e} disallowed.")
 
     while (e != 0):
         if (e & 1):
@@ -113,7 +119,7 @@ def intmodexp(x, e, m):
 
     if (e < 0):
         e = -e
-        x = intmodrecip(x, m)
+        xp = intmodrecip(xp, m)
 
     while (e != 0):
         if (e & 1):
@@ -125,8 +131,7 @@ def intmodexp(x, e, m):
 # ----------------------------------------------------------------
 def intmodrecip(x, m):
     if (gcd(x, m) != 1):
-        print(("intmodrecip:  impossible inverse", x, "mod", m))
-        raise RuntimeError
+        raise ValueError(f"intmodrecip:  impossible inverse {x} mod {m}")
     phi = eulerphi(m)
     return intmodexp(x, phi-1, m)
 
@@ -134,7 +139,7 @@ def intmodrecip(x, m):
 def factorial(n):
     if (n < 0):
         print("factorial: negative input disallowed.")
-        raise RuntimeError
+        raise ValueError
     if (n < 2):
         return 1
     rv = 1
